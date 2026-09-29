@@ -20,192 +20,321 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
-/* 레이아웃: 한 단 작업대. 위에서부터 제목 → 입력 카드(토글·한 문장·학교급) → 결과(학교급 → 교과) */
+/* 레이아웃: 연한 초록 배경 위, 윗부분은 [제목·특징 | 교실 책상 그림] 두 칸, 아래는 입력 카드와 결과 목록 한 칸 */
 :root {
-  --paper: #f4f6f2;
+  --bg: #f3f7f3;
+  --bg-glow: #e3efe6;
   --sheet: #ffffff;
-  --ink: #1c2521;
-  --muted: #5a665f;
-  --line: #d9dfd9;
-  --accent: #1e6a50;
+  --sheet-2: #f7faf7;
+  --ink: #1b2420;
+  --muted: #5b6861;
+  --line: #dbe3dc;
+  --accent: #1f6b4f;
+  --accent-2: #2f8a67;
   --accent-ink: #ffffff;
-  --accent-soft: #e2efe8;
-  --mark: #fbeeb5;
+  --accent-soft: #e4f1e9;
+  --accent-tint: #cfe5d7;
+  --leaf: #9fcfae;
+  --paper-page: #f3ead6;
+  --mark: #fbefbb;
   --mark-ink: #4f430f;
-  --syn: #ebe7f6;
-  --syn-ink: #3e3569;
-  --mid: #b7791f;
-  --mid-soft: #fbf1dd;
-  --weak: #8a948e;
-  --focus: #2b8a67;
-  --font-display: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --syn: #ece8f7;
+  --syn-ink: #3f3669;
+  --mid: #b0741a;
+  --mid-soft: #fbf1de;
+  --weak: #88938c;
+  --focus: #2f8a67;
+  --shadow: 0 10px 30px rgba(31, 107, 79, .08), 0 2px 6px rgba(0, 0, 0, .04);
+  --font-display: "Black Han Sans", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
-  --radius: 14px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #121715; --sheet: #1a211e; --ink: #e7ece9; --muted: #a0ada6; --line: #2e3833;
-    --accent: #6fcca6; --accent-ink: #0f1c16; --accent-soft: #1d3329; --mark: #4b4318; --mark-ink: #f5e6a6;
-    --syn: #2c2747; --syn-ink: #d2c9f4; --mid: #e3b25a; --mid-soft: #3a2f1a; --weak: #86918b; --focus: #6fcca6;
+    --bg: #101614; --bg-glow: #15221c; --sheet: #182019; --sheet-2: #1d2721; --ink: #e8eee9; --muted: #a3b0a8; --line: #2c3832;
+    --accent: #72cfa8; --accent-2: #8fdcbb; --accent-ink: #0d1b14; --accent-soft: #1d3329; --accent-tint: #25463a; --leaf: #3d7a5c;
+    --paper-page: #3a3526; --mark: #4b4318; --mark-ink: #f5e6a6; --syn: #2c2747; --syn-ink: #d4cbf5;
+    --mid: #e3b25a; --mid-soft: #3a2f1a; --weak: #87928b; --focus: #72cfa8;
+    --shadow: 0 10px 30px rgba(0, 0, 0, .35), 0 2px 6px rgba(0, 0, 0, .25);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #121715; --sheet: #1a211e; --ink: #e7ece9; --muted: #a0ada6; --line: #2e3833;
-  --accent: #6fcca6; --accent-ink: #0f1c16; --accent-soft: #1d3329; --mark: #4b4318; --mark-ink: #f5e6a6;
-  --syn: #2c2747; --syn-ink: #d2c9f4; --mid: #e3b25a; --mid-soft: #3a2f1a; --weak: #86918b; --focus: #6fcca6;
+  --bg: #101614; --bg-glow: #15221c; --sheet: #182019; --sheet-2: #1d2721; --ink: #e8eee9; --muted: #a3b0a8; --line: #2c3832;
+  --accent: #72cfa8; --accent-2: #8fdcbb; --accent-ink: #0d1b14; --accent-soft: #1d3329; --accent-tint: #25463a; --leaf: #3d7a5c;
+  --paper-page: #3a3526; --mark: #4b4318; --mark-ink: #f5e6a6; --syn: #2c2747; --syn-ink: #d4cbf5;
+  --mid: #e3b25a; --mid-soft: #3a2f1a; --weak: #87928b; --focus: #72cfa8;
+  --shadow: 0 10px 30px rgba(0, 0, 0, .35), 0 2px 6px rgba(0, 0, 0, .25);
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 body {
-  background: var(--paper); color: var(--ink);
-  font-family: var(--font-body); font-size: 17px; line-height: 1.65;
-  padding-inline: 16px; padding-block: 32px 64px; margin: 0;
+  margin: 0; color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.65;
+  background: radial-gradient(1100px 520px at 85% -8%, var(--bg-glow), transparent 70%), radial-gradient(900px 600px at -10% 90%, var(--bg-glow), transparent 65%), var(--bg);
+  background-attachment: fixed;
+  padding-inline: 16px; padding-block: 28px 64px; overflow-x: hidden;
 }
-.wrap { max-width: 800px; margin-inline: auto; display: grid; gap: 24px; }
+.deco { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.deco svg { position: absolute; }
+.wrap { position: relative; z-index: 1; max-width: 1080px; margin-inline: auto; display: grid; gap: 26px; }
 button, input, textarea { font: inherit; color: inherit; }
 button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+svg.i { width: 1em; height: 1em; flex: none; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-header { display: grid; gap: 8px; }
-.eyebrow { font-size: 14px; font-weight: 600; letter-spacing: .04em; color: var(--accent); }
-h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(34px, 7vw, 46px); line-height: 1.15; margin: 0; text-wrap: balance; }
-h1 .lead { color: var(--accent); display: block; font-size: .72em; }
-.lede { margin: 0; color: var(--muted); max-width: 60ch; }
+/* ── 히어로 ── */
+.hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 24px; align-items: center; }
+.hero-text { display: grid; gap: 14px; min-width: 0; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; color: var(--accent); }
+.eyebrow svg.i { font-size: 22px; }
+h1 { margin: 0; font-family: var(--font-display); font-weight: 400; line-height: 1.12; letter-spacing: -.01em; text-wrap: balance; }
+h1 .l1 { display: block; color: var(--accent); font-size: clamp(40px, 7.4vw, 66px); }
+h1 .l2 { display: block; font-size: clamp(44px, 8vw, 74px); }
+.lede { margin: 2px 0 0; color: var(--muted); font-size: 18px; max-width: 46ch; }
+.features { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 6px; }
+.feature { display: flex; align-items: center; gap: 10px; font-size: 14.5px; line-height: 1.45; color: var(--muted); }
+.feature .ic { width: 42px; height: 42px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-size: 20px; flex: none; }
+.art { min-width: 0; }
+.art svg { width: 100%; height: auto; display: block; max-width: 440px; margin-left: auto; }
 
-.card { background: var(--sheet); border: 1px solid var(--line); border-radius: 18px; padding: 22px; display: grid; gap: 18px; }
-.step { font-size: 15px; font-weight: 700; color: var(--muted); margin: 0 0 8px; }
-
-.toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 6px; }
-.toggle button {
-  border: 0; background: transparent; border-radius: 10px; padding: 12px 10px; cursor: pointer;
-  display: grid; gap: 2px; text-align: center; color: var(--muted);
+/* ── 입력 카드 ── */
+.card { background: var(--sheet); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; display: grid; gap: 22px; }
+.step { display: flex; align-items: center; gap: 12px; margin: 0 0 12px; font-size: 18px; font-weight: 700; }
+.num { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-size: 16px; font-weight: 700; flex: none; }
+.toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.opt {
+  position: relative; display: flex; align-items: center; gap: 16px; text-align: left; cursor: pointer;
+  background: var(--sheet-2); border: 2px solid var(--line); border-radius: 16px; padding: 18px 20px; min-height: 84px;
 }
-.toggle button b { font-size: 18px; font-weight: 700; }
-.toggle button span { font-size: 13.5px; }
-.toggle button[aria-checked="true"] { background: var(--sheet); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.08), inset 0 0 0 2px var(--accent); }
-.toggle button[aria-checked="true"] b { color: var(--accent); }
-
+.opt .big { font-size: 34px; color: var(--muted); display: grid; place-items: center; }
+.opt b { display: block; font-size: 19px; }
+.opt small { display: block; font-size: 14px; color: var(--muted); }
+.opt .check { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); display: none; place-items: center; font-size: 18px; }
+.opt[aria-checked="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.opt[aria-checked="true"] .big, .opt[aria-checked="true"] b { color: var(--accent); }
+.opt[aria-checked="true"] .check { display: grid; }
+.opt[aria-checked="true"] { padding-right: 58px; }
 textarea#q {
-  width: 100%; min-height: 104px; resize: vertical; font-size: 19px; line-height: 1.55;
-  background: var(--paper); border: 2px solid var(--line); border-radius: var(--radius); padding: 14px 16px;
+  width: 100%; min-height: 110px; resize: vertical; font-size: 19px; line-height: 1.55;
+  background: var(--sheet-2); border: 2px solid var(--line); border-radius: 16px; padding: 16px 18px;
 }
 textarea#q:focus { border-color: var(--accent); background: var(--sheet); }
-.helper { margin: 8px 2px 0; font-size: 15px; color: var(--muted); }
-
-.levels { display: flex; flex-wrap: wrap; gap: 8px; }
+.under { display: flex; justify-content: space-between; gap: 12px; margin-top: 10px; font-size: 15px; color: var(--muted); }
+.tip { display: flex; gap: 8px; align-items: flex-start; }
+.tip svg.i { color: var(--mid); font-size: 18px; margin-top: 3px; }
+.counter { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.levels { display: flex; flex-wrap: wrap; gap: 12px; }
 .pill {
-  border: 2px solid var(--line); background: var(--sheet); border-radius: 999px; padding: 8px 18px; cursor: pointer;
-  font-size: 16px; font-weight: 600; color: var(--muted); min-height: 44px;
+  min-width: 140px; min-height: 52px; border-radius: 999px; cursor: pointer; font-size: 17px; font-weight: 600;
+  border: 2px solid var(--line); background: var(--sheet-2); color: var(--muted); padding: 10px 22px;
 }
-.pill[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
-
+.pill[aria-pressed="true"] { border-color: var(--accent-tint); background: var(--accent-soft); color: var(--accent); }
 .reading { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 14px; color: var(--muted); }
-.tok { border-radius: 6px; padding: 2px 8px; font-size: 14px; }
+.reading:empty { display: none; }
+.tok { border-radius: 7px; padding: 2px 9px; font-size: 14px; }
 .tok.q { background: var(--mark); color: var(--mark-ink); }
 .tok.low { border: 1px dashed var(--line); color: var(--muted); }
 .tok.s { background: var(--syn); color: var(--syn-ink); }
+.cardfoot { border-top: 1px solid var(--line); padding-top: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+.status { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 16px; color: var(--muted); }
+.status .ic { width: 38px; height: 38px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-size: 19px; flex: none; }
+.status b { color: var(--accent); font-size: 21px; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 54px; border-radius: 14px; padding: 12px 22px; font-size: 17px; font-weight: 700; cursor: pointer; border: 2px solid var(--accent); background: var(--accent); color: var(--accent-ink); box-shadow: 0 6px 16px rgba(31, 107, 79, .18); }
+.btn.ghost { background: var(--sheet); color: var(--accent); box-shadow: none; }
+.btn svg.i { font-size: 19px; }
 
-.bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
-.bar p { margin: 0; font-size: 16px; }
-.bar p b { font-size: 20px; color: var(--accent); }
-.actions { display: flex; flex-wrap: wrap; gap: 8px; }
-.btn { min-height: 46px; border-radius: 12px; padding: 10px 18px; font-size: 16px; font-weight: 700; cursor: pointer; border: 2px solid var(--accent); background: var(--accent); color: var(--accent-ink); }
-.btn.ghost { background: var(--sheet); color: var(--accent); }
-
-.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; color: var(--muted); }
-.legend span { display: inline-flex; align-items: center; gap: 6px; }
-
+/* ── 결과 ── */
+.panel { background: var(--sheet); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 22px; display: grid; gap: 14px; }
+.panel .step { margin: 0; font-size: 16px; }
+.radios { display: flex; flex-wrap: wrap; gap: 18px; font-size: 15px; }
+.radios label { display: inline-flex; gap: 8px; align-items: center; cursor: pointer; }
+.radios input { accent-color: var(--accent); width: 18px; height: 18px; }
+.promptbox { width: 100%; min-height: 170px; font-family: var(--font-mono); font-size: 13px; background: var(--sheet-2); border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; color: var(--muted); padding-inline: 4px; }
+.legend > span { display: inline-flex; align-items: center; gap: 8px; }
+.results { display: grid; gap: 22px; }
 .level { display: grid; gap: 12px; }
-.level > h2 { font-family: var(--font-display); font-weight: 400; font-size: 26px; margin: 8px 0 0; display: flex; align-items: baseline; gap: 10px; }
-.level > h2 small { font-family: var(--font-body); font-size: 14px; color: var(--muted); font-weight: 500; }
+.level > h2 { font-family: var(--font-display); font-weight: 400; font-size: 30px; margin: 6px 0 0; display: flex; align-items: baseline; gap: 12px; }
+.level > h2 small { font-family: var(--font-body); font-size: 15px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 2px 12px; }
 .subject { display: grid; gap: 10px; }
-.subject > h3 { margin: 4px 0 0; font-size: 16px; font-weight: 700; color: var(--accent); display: flex; align-items: center; gap: 8px; }
-.subject > h3::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
-
-.item { background: var(--sheet); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; display: grid; gap: 8px; min-width: 0; }
-.item.s3 { border-color: var(--accent); box-shadow: inset 4px 0 0 var(--accent); }
+.subject > h3 { margin: 6px 0 0; font-size: 17px; font-weight: 700; color: var(--accent); display: flex; align-items: center; gap: 8px; }
+.subject > h3 svg.i { font-size: 18px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr)); gap: 12px; }
+.item { background: var(--sheet); border: 1px solid var(--line); border-radius: 18px; padding: 18px 20px; display: grid; gap: 10px; min-width: 0; box-shadow: 0 2px 8px rgba(0, 0, 0, .03); }
+.item.s3 { border: 2px solid var(--accent-tint); background: linear-gradient(var(--sheet), var(--sheet)) padding-box; }
 .top { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; justify-content: space-between; }
-.code { font-family: var(--font-mono); font-weight: 600; font-size: 16px; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 2px 8px; }
+.code { font-family: var(--font-mono); font-weight: 600; font-size: 15.5px; color: var(--accent); background: var(--accent-soft); border-radius: 8px; padding: 3px 9px; }
 .band { font-size: 14px; color: var(--muted); }
 .stmt { margin: 0; font-size: 18px; line-height: 1.6; }
 .why { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 13.5px; color: var(--muted); }
-.copy-code { margin-left: auto; border: 1px solid var(--line); background: var(--sheet); border-radius: 8px; padding: 4px 12px; font-size: 14px; font-weight: 600; color: var(--accent); cursor: pointer; min-height: 34px; }
-
-.strength { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; padding: 3px 12px 3px 10px; font-size: 14px; font-weight: 700; border: 2px solid currentColor; }
+.copy-code { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--sheet-2); border-radius: 10px; padding: 6px 12px; font-size: 14px; font-weight: 600; color: var(--accent); cursor: pointer; min-height: 38px; }
+.strength { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; padding: 4px 12px 4px 10px; font-size: 14px; font-weight: 700; border: 2px solid currentColor; }
 .strength i { display: inline-flex; gap: 2px; }
 .strength i b { width: 5px; height: 12px; border-radius: 2px; background: currentColor; opacity: .25; }
 .strength.s3 { color: var(--accent); background: var(--accent-soft); }
 .strength.s2 { color: var(--mid); background: var(--mid-soft); }
 .strength.s1 { color: var(--weak); }
 .strength.s3 i b, .strength.s2 i b:nth-child(-n+2), .strength.s1 i b:first-child { opacity: 1; }
-
-.empty { background: var(--sheet); border: 2px dashed var(--line); border-radius: 18px; padding: 24px; color: var(--muted); display: grid; gap: 8px; }
+.empty { background: var(--sheet); border: 2px dashed var(--line); border-radius: 20px; padding: 24px; color: var(--muted); display: grid; gap: 8px; }
 .empty b { color: var(--ink); font-size: 18px; }
-.promptbox { width: 100%; min-height: 170px; font-family: var(--font-mono); font-size: 13px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
-.radios { display: flex; flex-wrap: wrap; gap: 16px; font-size: 15px; }
-.radios label { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; }
-.radios input { accent-color: var(--accent); width: 18px; height: 18px; }
-.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(24px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--paper); padding: 10px 18px; border-radius: 12px; font-size: 15px; z-index: 10; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(24px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 12px; font-size: 15px; z-index: 10; }
 footer { font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; display: grid; gap: 6px; }
 footer a { color: inherit; }
-@media (max-width: 520px) {
-  .card { padding: 16px; }
-  .toggle button span { display: none; }
-  .actions { width: 100%; }
-  .actions .btn { flex: 1; }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; }
+  .art { display: none; }
+}
+@media (max-width: 560px) {
+  .card { padding: 18px; border-radius: 20px; }
+  .toggle { grid-template-columns: 1fr; gap: 10px; }
+  .opt { min-height: 72px; padding: 14px 16px; }
+  .pill { min-width: 0; flex: 1; padding-inline: 10px; }
+  .actions, .actions .btn { width: 100%; }
+  .under { flex-direction: column; gap: 4px; }
+  .features { gap: 10px; }
 }
 @media (prefers-reduced-motion: no-preference) {
-  .item { transition: border-color .15s, box-shadow .15s; }
-  .toggle button, .pill { transition: background .15s, color .15s, border-color .15s; }
+  .item, .opt, .pill, .btn { transition: background .15s, border-color .15s, color .15s, transform .15s; }
+  .btn:hover { transform: translateY(-1px); }
 }
 </style>
+
+<div class="deco" aria-hidden="true">
+  <svg viewBox="0 0 200 220" style="left:-40px; top:44%; width:190px; opacity:.55">
+    <path d="M100 210 C 96 150, 70 110, 30 80" stroke-width="4" fill="none" style="stroke:var(--leaf)"/>
+    <ellipse cx="46" cy="62" rx="40" ry="16" transform="rotate(35 46 62)" style="fill:var(--leaf)"/>
+    <ellipse cx="92" cy="104" rx="42" ry="15" transform="rotate(-20 92 104)" style="fill:var(--leaf)"/>
+    <ellipse cx="60" cy="140" rx="38" ry="14" transform="rotate(25 60 140)" style="fill:var(--leaf)"/>
+  </svg>
+  <svg viewBox="0 0 200 220" style="right:-50px; bottom:4%; width:200px; opacity:.45">
+    <path d="M100 210 C 104 150, 130 110, 170 80" stroke-width="4" fill="none" style="stroke:var(--leaf)"/>
+    <ellipse cx="154" cy="62" rx="40" ry="16" transform="rotate(-35 154 62)" style="fill:var(--leaf)"/>
+    <ellipse cx="108" cy="110" rx="42" ry="15" transform="rotate(20 108 110)" style="fill:var(--leaf)"/>
+  </svg>
+</div>
 
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <div class="eyebrow">2022 개정 특수교육 기본 교육과정 · 초·중·고 688개 성취기준</div>
-    <h1><span class="lead">여기여기 모여라!</span>관련 성취기준</h1>
-    <p class="lede">수업 주제나 앱 설명을 한 문장으로 적으면, 연관된 성취기준을 학교급과 교과별로 모아 드려요. 모든 검색은 이 브라우저 안에서만 처리돼요.</p>
-  </header>
+  <section class="hero">
+    <div class="hero-text">
+      <div class="eyebrow">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg>
+        2022 개정 특수교육 기본 교육과정 · 초·중·고 688개 성취기준
+      </div>
+      <h1><span class="l1">여기여기 모여라!</span><span class="l2">관련 성취기준</span></h1>
+      <p class="lede">수업 주제나 앱 설명을 한 문장으로 적으면, 연관된 성취기준을 학교급과 교과별로 모아 드려요. 모든 검색은 이 브라우저 안에서만 처리돼요.</p>
+      <div class="features">
+        <div class="feature"><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span><span>내 정보는 안전하게<br>브라우저 안에서만 처리</span></div>
+        <div class="feature"><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg></span><span>2022 개정 교육과정<br>688개 성취기준 기반</span></div>
+        <div class="feature"><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg></span><span>한 문장으로<br>빠르고 간편하게</span></div>
+      </div>
+    </div>
+
+    <div class="art" aria-hidden="true">
+      <svg viewBox="0 0 440 320">
+        <!-- 화분 -->
+        <path d="M78 150 C 70 110, 44 86, 14 78" stroke-width="3" fill="none" style="stroke:var(--accent-2)"/>
+        <ellipse cx="34" cy="80" rx="28" ry="11" transform="rotate(20 34 80)" style="fill:var(--leaf)"/>
+        <ellipse cx="62" cy="104" rx="30" ry="11" transform="rotate(-30 62 104)" style="fill:var(--accent-tint)"/>
+        <ellipse cx="96" cy="72" rx="30" ry="11" transform="rotate(-55 96 72)" style="fill:var(--leaf)"/>
+        <!-- 브라우저 창 -->
+        <rect x="92" y="40" width="300" height="210" rx="18" stroke-width="2" style="fill:var(--sheet);stroke:var(--line)"/>
+        <path d="M92 58 a18 18 0 0 1 18 -18 h264 a18 18 0 0 1 18 18 v14 h-300 z" style="fill:var(--accent-soft)"/>
+        <circle cx="114" cy="57" r="5" style="fill:var(--accent-2)"/><circle cx="130" cy="57" r="5" style="fill:var(--mid)"/><circle cx="146" cy="57" r="5" style="fill:var(--leaf)"/>
+        <rect x="112" y="90" width="150" height="30" rx="15" style="fill:var(--sheet-2);stroke:var(--line)"/>
+        <circle cx="130" cy="105" r="7" fill="none" stroke-width="2.5" style="stroke:var(--accent)"/><path d="M135 110 l6 6" stroke-width="2.5" stroke-linecap="round" style="stroke:var(--accent)"/>
+        <rect x="148" y="102" width="90" height="6" rx="3" style="fill:var(--accent-tint)"/>
+        <rect x="112" y="138" width="140" height="8" rx="4" style="fill:var(--accent-tint)"/>
+        <rect x="112" y="156" width="118" height="8" rx="4" style="fill:var(--line)"/>
+        <rect x="112" y="174" width="130" height="8" rx="4" style="fill:var(--line)"/>
+        <rect x="112" y="192" width="96" height="8" rx="4" style="fill:var(--line)"/>
+        <!-- 교과 카드 -->
+        <g font-family="IBM Plex Sans KR, sans-serif" font-size="16" font-weight="700" style="fill:var(--ink)">
+          <rect x="280" y="84" width="124" height="44" rx="12" stroke-width="1.5" style="fill:var(--sheet);stroke:var(--line)"/>
+          <path d="M296 97 h9 a4 4 0 0 1 4 4 v16 a3 3 0 0 0 -3 -3 h-10 z M322 97 h-9 a4 4 0 0 0 -4 4 v16 a3 3 0 0 1 3 -3 h10 z" stroke-width="1.8" style="fill:var(--mid-soft);stroke:var(--mid)"/>
+          <text x="334" y="112">국어</text>
+          <rect x="280" y="136" width="124" height="44" rx="12" stroke-width="1.5" style="fill:var(--sheet);stroke:var(--line)"/>
+          <rect x="297" y="147" width="18" height="22" rx="3" stroke-width="1.8" style="fill:var(--accent-soft);stroke:var(--accent)"/>
+          <rect x="300" y="150" width="12" height="5" rx="1" style="fill:var(--accent)"/>
+          <circle cx="302" cy="160" r="1.6" style="fill:var(--accent)"/><circle cx="306" cy="160" r="1.6" style="fill:var(--accent)"/><circle cx="310" cy="160" r="1.6" style="fill:var(--accent)"/>
+          <circle cx="302" cy="165" r="1.6" style="fill:var(--accent)"/><circle cx="306" cy="165" r="1.6" style="fill:var(--accent)"/><circle cx="310" cy="165" r="1.6" style="fill:var(--accent)"/>
+          <text x="334" y="164">수학</text>
+          <rect x="280" y="188" width="124" height="44" rx="12" stroke-width="1.5" style="fill:var(--sheet);stroke:var(--line)"/>
+          <path d="M306 224 v-12" stroke-width="2" style="stroke:var(--accent)"/>
+          <ellipse cx="300" cy="206" rx="8" ry="4" transform="rotate(35 300 206)" style="fill:var(--leaf)"/>
+          <ellipse cx="312" cy="204" rx="8" ry="4" transform="rotate(-35 312 204)" style="fill:var(--accent-2)"/>
+          <text x="334" y="216">사회</text>
+        </g>
+        <!-- 책 더미 -->
+        <rect x="40" y="262" width="190" height="30" rx="5" style="fill:var(--accent)"/>
+        <rect x="52" y="266" width="176" height="22" rx="3" style="fill:var(--paper-page)"/>
+        <rect x="40" y="262" width="18" height="30" rx="4" style="fill:var(--accent)"/>
+        <rect x="60" y="232" width="164" height="30" rx="5" style="fill:var(--accent-2)"/>
+        <rect x="72" y="236" width="150" height="22" rx="3" style="fill:var(--paper-page)"/>
+        <rect x="60" y="232" width="18" height="30" rx="4" style="fill:var(--accent-2)"/>
+        <!-- 연필꽂이 -->
+        <rect x="402" y="232" width="4" height="46" rx="2" transform="rotate(-8 404 255)" style="fill:var(--accent)"/>
+        <rect x="412" y="226" width="4" height="52" rx="2" style="fill:var(--accent-2)"/>
+        <rect x="421" y="232" width="4" height="46" rx="2" transform="rotate(8 423 255)" style="fill:var(--leaf)"/>
+        <rect x="394" y="262" width="40" height="40" rx="8" stroke-width="2" style="fill:var(--sheet);stroke:var(--line)"/>
+        <!-- 반짝이 -->
+        <path d="M412 22 l6 -12 M424 30 l12 -6 M404 16 l-2 -12" stroke-width="4" stroke-linecap="round" style="stroke:var(--accent-2)"/>
+      </svg>
+    </div>
+  </section>
 
   <section class="card" aria-label="검색">
     <div>
-      <p class="step" id="mode-label">1. 무엇으로 찾을까요?</p>
+      <p class="step" id="mode-label"><span class="num">1</span>무엇으로 찾을까요?</p>
       <div class="toggle" role="radiogroup" aria-labelledby="mode-label">
-        <button type="button" role="radio" id="mode-topic" data-mode="topic" aria-checked="true"><b>수업 주제</b><span>배우는 내용으로 찾기</span></button>
-        <button type="button" role="radio" id="mode-app" data-mode="app" aria-checked="false"><b>앱 설명</b><span>학생이 앱에서 하는 행동으로 찾기</span></button>
+        <button type="button" class="opt" role="radio" id="mode-topic" data-mode="topic" aria-checked="true">
+          <span class="big"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/><path d="M22 10v6"/></svg></span>
+          <span><b>수업 주제</b><small>배우는 내용으로 찾기</small></span>
+          <span class="check"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></span>
+        </button>
+        <button type="button" class="opt" role="radio" id="mode-app" data-mode="app" aria-checked="false">
+          <span class="big"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg></span>
+          <span><b>앱 설명</b><small>학생이 앱에서 하는 행동으로 찾기</small></span>
+          <span class="check"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></span>
+        </button>
       </div>
     </div>
+
     <div>
-      <label class="step" for="q" id="q-label">2. 수업 주제를 한 문장으로 적어 주세요</label>
-      <textarea id="q" rows="2" autocomplete="off" placeholder="예: 대중교통을 이용하여 목적지까지 이동하기"></textarea>
-      <p class="helper" id="helper">배우는 내용이 드러나게 적으면 잘 찾아요. 예: 세탁기로 간단한 옷 빨기, 지폐와 동전으로 물건값 내기</p>
+      <label class="step" for="q"><span class="num">2</span><span id="q-label">수업 주제를 한 문장으로 적어 주세요.</span></label>
+      <textarea id="q" rows="2" maxlength="300" autocomplete="off" placeholder="예: 대중교통을 이용하여 목적지까지 이동하기"></textarea>
+      <div class="under">
+        <span class="tip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg><span id="helper">배우는 내용이 드러나게 적으면 잘 찾아요. 예: 세탁기로 간단한 옷 빨기, 지폐와 동전으로 물건값 내기</span></span>
+        <span class="counter" id="counter">0/300</span>
+      </div>
     </div>
+
     <div>
-      <p class="step">3. 학교급</p>
+      <p class="step"><span class="num">3</span>학교급을 선택해 주세요.</p>
       <div class="levels" role="group" aria-label="학교급">
         <button type="button" class="pill" id="lv-e" data-level="초등학교" aria-pressed="true">초등학교</button>
         <button type="button" class="pill" id="lv-m" data-level="중학교" aria-pressed="true">중학교</button>
         <button type="button" class="pill" id="lv-h" data-level="고등학교" aria-pressed="true">고등학교</button>
       </div>
     </div>
+
     <div class="reading" id="reading" aria-live="polite"></div>
+
+    <div class="cardfoot">
+      <p class="status"><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h5"/><path d="M14 2v6h6v3"/><circle cx="16.5" cy="16.5" r="3.5"/><path d="m19 19 3 3"/></svg></span><span id="count">성취기준 데이터를 불러오는 중이에요.</span></p>
+      <div class="actions">
+        <button class="btn ghost" id="copy-list" type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>결과 목록 복사</button>
+        <button class="btn" id="copy-prompt" type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>AI에게 더 정교하게 묻기<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+      </div>
+    </div>
   </section>
 
-  <div class="bar">
-    <p id="count">성취기준 데이터를 불러오는 중이에요.</p>
-    <div class="actions">
-      <button class="btn ghost" id="copy-list" type="button">결과 목록 복사</button>
-      <button class="btn" id="copy-prompt" type="button">AI에게 더 정교하게 묻기</button>
-    </div>
-  </div>
-
-  <section id="prompt-panel" class="card" hidden aria-label="AI 프롬프트">
+  <section id="prompt-panel" class="panel" hidden aria-label="AI 프롬프트">
     <label class="step" for="prompt">아래 내용이 복사됐어요. 쓰시는 AI 채팅(Claude, ChatGPT, Gemini 등)에 붙여넣으세요.</label>
     <div class="radios">
       <label><input type="radio" name="scope" id="scope-top" value="top" checked> 검색 상위 30개만 넣기</label>
@@ -215,12 +344,12 @@ footer a { color: inherit; }
   </section>
 
   <div class="legend" id="legend" hidden>
-    <span><span class="strength s3"><i><b></b><b></b><b></b></i>강함</span> 드문 핵심어가 여러 개 맞음</span>
-    <span><span class="strength s2"><i><b></b><b></b><b></b></i>보통</span> 드문 핵심어 1개</span>
-    <span><span class="strength s1"><i><b></b><b></b><b></b></i>약함</span> 흔한 말만 맞음</span>
+    <span><span class="strength s3"><i><b></b><b></b><b></b></i>강함</span>드문 핵심어가 여러 개 맞음</span>
+    <span><span class="strength s2"><i><b></b><b></b><b></b></i>보통</span>드문 핵심어 1개</span>
+    <span><span class="strength s1"><i><b></b><b></b><b></b></i>약함</span>흔한 말만 맞음</span>
   </div>
 
-  <main id="results" aria-live="polite"></main>
+  <main id="results" class="results" aria-live="polite"></main>
 
   <footer>
     <div>성취기준 원문: 교육부 고시 제2022-34호 [별책 3] 특수교육 기본 교육과정. 검색어 일부: 국립특수교육원(2023) 교과별 기본 교육과정 평가 자료.</div>
@@ -236,18 +365,20 @@ import { buildIndex, search, buildPrompt } from "./search.js";
 const $ = (id) => document.getElementById(id);
 const MODES = {
   topic: {
-    label: "2. 수업 주제를 한 문장으로 적어 주세요",
+    label: "수업 주제를 한 문장으로 적어 주세요.",
     placeholder: "예: 대중교통을 이용하여 목적지까지 이동하기",
     helper: "배우는 내용이 드러나게 적으면 잘 찾아요. 예: 세탁기로 간단한 옷 빨기, 지폐와 동전으로 물건값 내기",
     prompt: "수업 주제",
   },
   app: {
-    label: "2. 앱 설명을 한 문장으로 적어 주세요",
+    label: "앱 설명을 한 문장으로 적어 주세요.",
     placeholder: "예: 내릴 곳에서 버스 하차 버튼을 눌러 스스로 버스 타기를 연습해요.",
     helper: "학생이 앱에서 실제로 보고, 누르고, 고르는 행동을 적으면 잘 찾아요. '게임'보다 '하차 벨 누르기'처럼요.",
     prompt: "앱 설명",
   },
 };
+const SUBJECT_ICON = '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg>';
+const COPY_ICON = '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>';
 let mode = "topic";
 const texts = { topic: "", app: "" };
 let index = null, all = [], last = null;
@@ -264,14 +395,16 @@ async function copy(text, target) {
 function levels() {
   return ["lv-e", "lv-m", "lv-h"].map($).filter((b) => b.getAttribute("aria-pressed") === "true").map((b) => b.dataset.level);
 }
+function updateCounter() { $("counter").textContent = `${Array.from($("q").value).length}/300`; }
 function setMode(m) {
   texts[mode] = $("q").value;
   mode = m;
-  for (const b of document.querySelectorAll(".toggle button")) b.setAttribute("aria-checked", String(b.dataset.mode === m));
+  for (const b of document.querySelectorAll(".opt")) b.setAttribute("aria-checked", String(b.dataset.mode === m));
   $("q-label").textContent = MODES[m].label;
   $("q").placeholder = MODES[m].placeholder;
   $("helper").textContent = MODES[m].helper;
   $("q").value = texts[m];
+  updateCounter();
   $("q").focus();
   render();
 }
@@ -311,7 +444,8 @@ function render() {
       <h2>${esc(g.school_level)} <small>${cnt}개</small></h2>
       ${g.subjects.map((sub) => `
         <div class="subject">
-          <h3>${esc(sub.subject)}</h3>
+          <h3>${SUBJECT_ICON}${esc(sub.subject)}</h3>
+          <div class="grid">
           ${sub.items.map((r) => {
             const s = r.standard;
             const lvl = { "강함": 3, "보통": 2, "약함": 1 }[r.strength];
@@ -324,10 +458,11 @@ function render() {
               <p class="stmt">${esc(s.text)}</p>
               <div class="why">
                 ${words.length ? "<span>맞은 말</span>" + words.map((m) => `<span class="tok ${m.source === "query" ? "q" : "s"}">${esc(m.word)}</span>`).join("") : ""}
-                <button class="copy-code" type="button" data-copy="${esc(s.code + " " + s.text)}">복사</button>
+                <button class="copy-code" type="button" data-copy="${esc(s.code + " " + s.text)}">${COPY_ICON}복사</button>
               </div>
             </article>`;
           }).join("")}
+          </div>
         </div>`).join("")}
     </section>`;
   }).join("");
@@ -344,13 +479,16 @@ async function showPrompt() {
   $("prompt").value = promptText();
   const ok = await copy($("prompt").value, $("prompt"));
   toast(ok ? "프롬프트를 복사했어요" : "글을 선택해 두었어요. 복사해서 쓰세요");
+  $("prompt-panel").scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
 let timer;
-$("q").addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(render, 180); });
-for (const b of document.querySelectorAll(".toggle button")) b.addEventListener("click", () => b.dataset.mode !== mode && setMode(b.dataset.mode));
+$("q").addEventListener("input", () => { updateCounter(); clearTimeout(timer); timer = setTimeout(render, 180); });
+for (const b of document.querySelectorAll(".opt")) b.addEventListener("click", () => b.dataset.mode !== mode && setMode(b.dataset.mode));
 document.querySelector(".toggle").addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft" || e.key === "ArrowRight") { e.preventDefault(); setMode(mode === "topic" ? "app" : "topic"); $("mode-" + mode).focus(); }
+  if (e.key === "ArrowLeft" || e.key === "ArrowRight" || e.key === "ArrowUp" || e.key === "ArrowDown") {
+    e.preventDefault(); setMode(mode === "topic" ? "app" : "topic"); $("mode-" + mode).focus();
+  }
 });
 for (const id of ["lv-e", "lv-m", "lv-h"]) $(id).addEventListener("click", () => {
   const b = $(id); b.setAttribute("aria-pressed", String(b.getAttribute("aria-pressed") !== "true")); render();
