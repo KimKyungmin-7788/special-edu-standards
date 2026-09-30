@@ -28,6 +28,9 @@
   --bg-glow: #e3efe6;
   --sheet: #ffffff;
   --sheet-2: #f7faf7;
+  --panel: #e8f2eb;
+  --panel-line: #d3e6d9;
+  --field: #ffffff;
   --ink: #1b2420;
   --muted: #5b6861;
   --line: #dbe3dc;
@@ -53,7 +56,7 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #101614; --bg-glow: #15221c; --sheet: #182019; --sheet-2: #1d2721; --ink: #e8eee9; --muted: #a3b0a8; --line: #2c3832;
+    --bg: #101614; --bg-glow: #15221c; --sheet: #182019; --sheet-2: #1d2721; --panel: #13291f; --panel-line: #24483a; --field: #1d2721; --ink: #e8eee9; --muted: #a3b0a8; --line: #2c3832;
     --accent: #72cfa8; --accent-2: #8fdcbb; --accent-ink: #0d1b14; --accent-soft: #1d3329; --accent-tint: #25463a; --leaf: #3d7a5c;
     --paper-page: #3a3526; --mark: #4b4318; --mark-ink: #f5e6a6; --syn: #2c2747; --syn-ink: #d4cbf5;
     --mid: #e3b25a; --mid-soft: #3a2f1a; --weak: #87928b; --focus: #72cfa8;
@@ -62,7 +65,7 @@
   }
 }
 :root[data-theme="dark"] {
-  --bg: #101614; --bg-glow: #15221c; --sheet: #182019; --sheet-2: #1d2721; --ink: #e8eee9; --muted: #a3b0a8; --line: #2c3832;
+  --bg: #101614; --bg-glow: #15221c; --sheet: #182019; --sheet-2: #1d2721; --panel: #13291f; --panel-line: #24483a; --field: #1d2721; --ink: #e8eee9; --muted: #a3b0a8; --line: #2c3832;
   --accent: #72cfa8; --accent-2: #8fdcbb; --accent-ink: #0d1b14; --accent-soft: #1d3329; --accent-tint: #25463a; --leaf: #3d7a5c;
   --paper-page: #3a3526; --mark: #4b4318; --mark-ink: #f5e6a6; --syn: #2c2747; --syn-ink: #d4cbf5;
   --mid: #e3b25a; --mid-soft: #3a2f1a; --weak: #87928b; --focus: #72cfa8;
@@ -101,12 +104,12 @@ h1 .l1 { color: var(--accent); }
 /* ── 두 칸 ── */
 .main { display: grid; grid-template-columns: minmax(360px, 440px) minmax(0, 1fr); gap: 16px; min-height: 0; }
 .col { min-height: 0; display: flex; flex-direction: column; gap: 12px; }
-.card { background: var(--sheet); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; }
+.card { background: var(--panel); border: 1px solid var(--panel-line); border-radius: 20px; padding: 18px; }
 .inputs { display: grid; gap: 14px; }
 .step { display: flex; align-items: center; gap: 10px; margin: 0 0 8px; font-size: 15.5px; font-weight: 700; }
 .num { width: 26px; height: 26px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-size: 14px; font-weight: 700; flex: none; }
 .toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.opt { position: relative; display: flex; align-items: center; gap: 10px; text-align: left; cursor: pointer; background: var(--sheet-2); border: 2px solid var(--line); border-radius: 14px; padding: 10px 12px; min-height: 62px; }
+.opt { position: relative; display: flex; align-items: center; gap: 10px; text-align: left; cursor: pointer; background: var(--field); border: 2px solid var(--line); border-radius: 14px; padding: 10px 12px; min-height: 62px; }
 .opt .big { font-size: 26px; color: var(--muted); display: grid; place-items: center; }
 .opt b { display: block; font-size: 16.5px; }
 .opt small { display: block; font-size: 12.5px; color: var(--muted); line-height: 1.35; }
@@ -114,14 +117,14 @@ h1 .l1 { color: var(--accent); }
 .opt[aria-checked="true"] { border-color: var(--accent); background: var(--accent-soft); }
 .opt[aria-checked="true"] .big, .opt[aria-checked="true"] b { color: var(--accent); }
 .opt[aria-checked="true"] .check { display: grid; }
-textarea#q { width: 100%; min-height: 76px; resize: vertical; font-size: 17px; line-height: 1.5; background: var(--sheet-2); border: 2px solid var(--line); border-radius: 14px; padding: 10px 14px; }
-textarea#q:focus { border-color: var(--accent); background: var(--sheet); }
+textarea#q { width: 100%; min-height: 76px; resize: vertical; font-size: 17px; line-height: 1.5; background: var(--field); border: 2px solid var(--line); border-radius: 14px; padding: 10px 14px; }
+textarea#q:focus { border-color: var(--accent); }
 .under { display: flex; justify-content: space-between; gap: 10px; margin-top: 6px; font-size: 13px; color: var(--muted); line-height: 1.45; }
 .tip { display: flex; gap: 6px; align-items: flex-start; }
 .tip svg.i { color: var(--mid); font-size: 15px; margin-top: 2px; }
 .counter { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .levels { display: flex; gap: 8px; }
-.pill { flex: 1; min-height: 44px; border-radius: 999px; cursor: pointer; font-size: 15.5px; font-weight: 600; border: 2px solid var(--line); background: var(--sheet-2); color: var(--muted); padding: 6px 10px; }
+.pill { flex: 1; min-height: 44px; border-radius: 999px; cursor: pointer; font-size: 15.5px; font-weight: 600; border: 2px solid var(--line); background: var(--field); color: var(--muted); padding: 6px 10px; }
 .pill[aria-pressed="true"] { border-color: var(--accent-tint); background: var(--accent-soft); color: var(--accent); }
 .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 48px; border-radius: 12px; padding: 8px 12px; font-size: 15px; font-weight: 700; cursor: pointer; border: 2px solid var(--accent); background: var(--accent); color: var(--accent-ink); }
@@ -137,7 +140,7 @@ textarea#q:focus { border-color: var(--accent); background: var(--sheet); }
 .badge { font-size: 13px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 1px 10px; }
 .linkbtn { border: 0; background: none; color: var(--muted); font-size: 13.5px; cursor: pointer; text-decoration: underline; padding: 4px; }
 .basket-list { list-style: none; margin: 0; padding: 0; flex: 1 1 auto; min-height: 0; overflow-y: auto; display: grid; align-content: start; gap: 6px; }
-.basket-list li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; align-items: start; background: var(--sheet-2); border: 1px solid var(--line); border-radius: 12px; padding: 8px 8px 8px 10px; }
+.basket-list li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; align-items: start; background: var(--field); border: 1px solid var(--line); border-radius: 12px; padding: 8px 8px 8px 10px; }
 .basket-list .n { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 2px; }
 .basket-list .t { font-size: 14px; line-height: 1.45; }
 .basket-list .t b { font-family: var(--font-mono); color: var(--accent); font-size: 13.5px; margin-right: 4px; }
@@ -145,15 +148,15 @@ textarea#q:focus { border-color: var(--accent); background: var(--sheet); }
 .mini button { width: 30px; height: 30px; border: 0; background: none; border-radius: 8px; color: var(--muted); cursor: pointer; display: grid; place-items: center; font-size: 15px; }
 .mini button:hover { background: var(--accent-soft); color: var(--accent); }
 .mini button:disabled { opacity: .3; cursor: default; background: none; }
-.basket-empty { margin: 0; font-size: 14px; color: var(--muted); border: 2px dashed var(--line); border-radius: 12px; padding: 14px; }
+.basket-empty { margin: 0; font-size: 14px; color: var(--muted); border: 2px dashed var(--panel-line); border-radius: 12px; padding: 14px; }
 .legal { font-size: 12.5px; color: var(--muted); }
 .legal a { color: inherit; }
 
 /* ── 결과 칸 ── */
 .results-col { background: var(--sheet); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
 .results-head { padding: 14px 18px; border-bottom: 1px solid var(--line); display: grid; gap: 8px; background: var(--sheet); }
-.status { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 15.5px; color: var(--muted); }
-.status .ic { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-size: 16px; flex: none; }
+.status { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 12px; margin: 0; font-size: 15px; color: var(--muted); }
+.status h2 { margin: 0; display: flex; align-items: center; gap: 10px; font-size: 17px; color: var(--ink); }
 .status b { color: var(--accent); font-size: 19px; }
 .reading { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; font-size: 13px; color: var(--muted); }
 .reading:empty { display: none; }
@@ -163,7 +166,7 @@ textarea#q:focus { border-color: var(--accent); background: var(--sheet); }
 .tok.s { background: var(--syn); color: var(--syn-ink); }
 .legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12.5px; color: var(--muted); }
 .legend > span { display: inline-flex; align-items: center; gap: 6px; }
-.results { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 16px 18px 22px; display: grid; align-content: start; gap: 18px; background: var(--sheet-2); }
+.results { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 16px 18px 22px; display: grid; align-content: start; gap: 18px; background: var(--sheet); }
 .level { display: grid; gap: 10px; }
 .level > h2 { font-family: var(--font-display); font-weight: 400; font-size: 24px; margin: 0; display: flex; align-items: baseline; gap: 10px; }
 .level > h2 small { font-family: var(--font-body); font-size: 13.5px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 1px 10px; }
@@ -191,6 +194,9 @@ textarea#q:focus { border-color: var(--accent); background: var(--sheet); }
 .strength.s3 i b, .strength.s2 i b:nth-child(-n+2), .strength.s1 i b:first-child { opacity: 1; }
 .empty { border: 2px dashed var(--line); border-radius: 16px; padding: 20px; color: var(--muted); display: grid; gap: 6px; background: var(--sheet); }
 .empty b { color: var(--ink); font-size: 17px; }
+.empty.start { border: 0; background: none; text-align: center; justify-items: center; padding: 48px 20px; max-width: 520px; margin: 0 auto; }
+.empty.start .big { width: 56px; height: 56px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-size: 26px; margin-bottom: 6px; }
+.empty.start .hint { font-size: 14px; }
 
 /* 프롬프트 팝업 */
 dialog { border: 1px solid var(--line); border-radius: 20px; padding: 20px; width: min(760px, calc(100vw - 32px)); background: var(--sheet); color: var(--ink); box-shadow: var(--shadow); }
@@ -346,7 +352,7 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); }
     <!-- 오른쪽: 결과 -->
     <section class="results-col" aria-label="검색 결과">
       <div class="results-head">
-        <p class="status"><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h5"/><path d="M14 2v6h6v3"/><circle cx="16.5" cy="16.5" r="3.5"/><path d="m19 19 3 3"/></svg></span><span id="count">성취기준 데이터를 불러오는 중이에요.</span></p>
+        <div class="status"><h2><span class="num">4</span>찾은 성취기준</h2><span id="count">성취기준 데이터를 불러오는 중이에요.</span></div>
         <div class="reading" id="reading" aria-live="polite"></div>
         <div class="legend" id="legend" hidden>
           <span><span class="strength s3"><i><b></b><b></b><b></b></i>강함</span>드문 핵심어 여러 개</span>
@@ -390,6 +396,7 @@ const ICON = {
   check: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>',
   up: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg>',
   down: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>',
+  left: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>',
   x: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>',
 };
 let mode = "topic";
@@ -453,11 +460,11 @@ function render() {
   const text = $("q").value.trim();
   if (!text) {
     $("reading").innerHTML = ""; $("legend").hidden = true;
-    $("count").textContent = "한 문장을 적으면 바로 결과가 나와요.";
-    $("results").innerHTML = `<div class="empty"><b>무엇을 적으면 좋을까요?</b>
-      <span>수업 주제: "지폐와 동전으로 물건값 내기"처럼 배우는 내용을 적어요.</span>
-      <span>앱 설명: "달력에서 오늘 날짜와 요일을 찾아 눌러요"처럼 학생이 하는 행동을 적어요.</span>
-      <span>마음에 드는 성취기준은 <b style="font-size:inherit">바구니 담기</b>로 모아 두고 한 번에 복사해요.</span></div>`;
+    $("count").textContent = "";
+    $("results").innerHTML = `<div class="empty start"><span class="big">${ICON.left}</span><b>왼쪽에 한 문장을 적으면 여기에 모여요</b>
+      <span class="hint">수업 주제: "지폐와 동전으로 물건값 내기"처럼 배우는 내용을 적어요.</span>
+      <span class="hint">앱 설명: "달력에서 오늘 날짜와 요일을 찾아 눌러요"처럼 학생이 하는 행동을 적어요.</span>
+      <span class="hint">마음에 드는 성취기준은 <b style="font-size:inherit">바구니 담기</b>로 모아 두고 한 번에 복사해요.</span></div>`;
     last = null; return;
   }
   const lv = levels();
