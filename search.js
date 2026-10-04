@@ -169,6 +169,20 @@ function rawTokens(text) {
   return out;
 }
 
+// 화면 설명용: 문장의 낱말마다 어떻게 처리했는지 돌려준다 (검색 점수에는 쓰지 않음)
+//   kind: core(핵심어) | low(앱 형식·일반어라 약하게) | stop(뺀 말), rest: 떼어 낸 조사·어미
+export function explainWords(text) {
+  const out = [];
+  for (const w of normalize(text).split(" ").filter(Boolean)) {
+    const t = STOP_WORDS.has(w) ? "" : stripParticle(w);
+    let kind = "core";
+    if (!t || STOP_WORDS.has(t)) kind = "stop";
+    else if (FORMAT_WORDS.has(w) || FORMAT_WORDS.has(t) || GENERIC_WORDS.has(w) || GENERIC_WORDS.has(t)) kind = "low";
+    out.push({ word: w, token: t || w, rest: t && w.startsWith(t) ? w.slice(t.length) : "", kind });
+  }
+  return out;
+}
+
 export function parseQuery(query, index) {
   const parts = typeof query === "string"
     ? [{ text: query, mult: 1.0, from: "app" }]

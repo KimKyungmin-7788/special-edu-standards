@@ -116,6 +116,7 @@ textarea#q { width: 100%; min-height: 76px; resize: vertical; font-size: 17px; l
 textarea#q:focus { border-color: var(--accent); }
 textarea#q.waiting { border-color: var(--accent); box-shadow: 0 0 0 5px var(--accent-soft); }
 .under { display: flex; justify-content: space-between; gap: 10px; margin-top: 6px; font-size: 13px; color: var(--muted); line-height: 1.45; }
+.under.has-text { display: none; }
 .tip { display: flex; gap: 6px; align-items: flex-start; }
 .tip svg.i { color: var(--mid); font-size: 15px; margin-top: 2px; }
 .counter { font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -129,13 +130,13 @@ textarea#q.waiting { border-color: var(--accent); box-shadow: 0 0 0 5px var(--ac
 .btn svg.i { font-size: 17px; }
 
 /* ── 바구니 ── */
-.basket { flex: 1 1 auto; min-height: 180px; display: flex; flex-direction: column; gap: 10px; }
+.basket { flex: 1 1 auto; min-height: 200px; display: flex; flex-direction: column; gap: 10px; }
 .basket-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .basket-head h2 { margin: 0; display: flex; align-items: center; gap: 8px; font-size: 17px; }
 .basket-head h2 svg.i { color: var(--accent); font-size: 20px; }
 .badge { font-size: 13px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 1px 10px; }
 .linkbtn { border: 0; background: none; color: var(--muted); font-size: 13.5px; cursor: pointer; text-decoration: underline; padding: 4px; }
-.basket-list { list-style: none; margin: 0; padding: 0; flex: 1 1 auto; min-height: 0; overflow-y: auto; display: grid; align-content: start; gap: 6px; }
+.basket-list { list-style: none; margin: 0; padding: 0; flex: 1 1 auto; min-height: 60px; overflow-y: auto; display: grid; align-content: start; gap: 6px; }
 .basket-list li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; align-items: start; background: var(--field); border: 1px solid var(--line); border-radius: 12px; padding: 8px 8px 8px 10px; }
 .basket-list .n { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 2px; }
 .basket-list .t { font-size: 14px; line-height: 1.45; }
@@ -149,13 +150,22 @@ textarea#q.waiting { border-color: var(--accent); box-shadow: 0 0 0 5px var(--ac
 .legal a { color: inherit; }
 
 /* ── 결과 칸 ── */
-.results-col { background: var(--sheet); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+.rcol { min-height: 0; display: flex; flex-direction: column; gap: 6px; }
+.rcol .legal { text-align: right; }
+.results-col { flex: 1 1 auto; background: var(--sheet); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
 .results-head { padding: 14px 18px; border-bottom: 1px solid var(--line); display: grid; gap: 8px; background: var(--sheet); }
 .status { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 12px; margin: 0; font-size: 15px; color: var(--muted); }
 .status h2 { margin: 0; display: flex; align-items: center; gap: 10px; font-size: 17px; color: var(--ink); }
 .status b { color: var(--accent); font-size: 19px; }
-.reading { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; font-size: 13px; color: var(--muted); }
-.reading:empty { display: none; }
+.explain { margin-top: 6px; background: var(--field); border: 1px solid var(--panel-line); border-radius: 14px; padding: 10px 12px; display: grid; gap: 6px; }
+.explain-title { margin: 0; display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; color: var(--accent); }
+.explain-title span { font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ex-row { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 8px; align-items: baseline; }
+.ex-row > span:first-child { font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+.ex-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.tok .rest { opacity: .45; }
+.tok.stop { color: var(--muted); text-decoration: line-through; border: 1px dashed var(--line); }
+.syn-from { font-size: 12.5px; color: var(--muted); margin-right: 2px; }
 .tok { border-radius: 6px; padding: 1px 8px; font-size: 13px; }
 .tok.q { background: var(--mark); color: var(--mark-ink); }
 .tok.low { border: 1px dashed var(--line); color: var(--muted); }
@@ -215,13 +225,29 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); }
   .col { gap: 10px; }
   .inputs { gap: 10px; }
   .step { margin-bottom: 6px; font-size: 15px; }
-  .opt { min-height: 50px; padding: 6px 10px; }
+  .opt { min-height: 44px; padding: 4px 10px; }
   .opt .big { font-size: 22px; }
   textarea#q { min-height: 58px; }
   .under { margin-top: 4px; }
-  .pill { min-height: 40px; }
-  .btn { min-height: 44px; }
-  .basket { min-height: 150px; gap: 8px; }
+  .pill { min-height: 36px; padding: 4px 10px; }
+  .btn { min-height: 40px; }
+  .basket { min-height: 176px; gap: 8px; }
+  .inputs { gap: 8px; }
+  .legal { font-size: 12px; line-height: 1.45; }
+  .step { margin-bottom: 4px; }
+  .col { gap: 8px; }
+  textarea#q { min-height: 52px; }
+  .explain { padding: 8px 10px; gap: 4px; }
+  .explain .tok { font-size: 12.5px; padding: 0 6px; }
+}
+/* 아주 낮은 화면: 검색어 풀이를 한 줄 흐름으로 */
+@media (min-width: 901px) and (max-height: 760px) {
+  .explain { display: block; line-height: 1.9; }
+  .explain-title { margin-bottom: 2px; }
+  .ex-row { display: inline; margin-right: 10px; }
+  .ex-row > span:first-child { margin-right: 4px; }
+  .ex-chips { display: inline; }
+  .ex-chips .tok, .ex-chips .syn-from, .ex-row > span:first-child { display: inline-block; line-height: 1.5; margin-right: 3px; }
 }
 /* 그래도 넘치면 왼쪽 칸만 안에서 스크롤 */
 @media (min-width: 901px) and (min-height: 561px) { .col { overflow-y: auto; } }
@@ -230,6 +256,7 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); }
   .app { height: auto; }
   .main { grid-template-columns: 1fr; }
   .results-col { overflow: visible; }
+  .rcol .legal { text-align: left; }
   .results { overflow: visible; }
   .basket { min-height: 0; }
   .basket-list { overflow: visible; }
@@ -280,6 +307,7 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); }
             <span class="tip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg><span id="helper">배우는 내용이 드러나게 적어요. 예: 지폐와 동전으로 물건값 내기</span></span>
             <span class="counter" id="counter">0/300</span>
           </div>
+          <div class="explain" id="explain" aria-live="polite" hidden></div>
         </div>
         <div>
           <p class="step done"><span class="num"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></span>학교급</p>
@@ -305,14 +333,13 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); }
         <button class="btn" id="basket-copy" type="button" disabled><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>담은 성취기준 복사</button>
       </section>
 
-      <div class="legal">운영 김경민 · <a href="/privacy">개인정보처리방침</a> · <a href="/terms">이용약관</a> · 문의 themaniwant19@gmail.com · 성취기준 원문: 교육부 고시 제2022-34호 [별책 3] · 검색어 일부: 국립특수교육원(2023) 평가 자료</div>
     </div>
 
     <!-- 오른쪽: 결과 -->
+    <div class="rcol">
     <section class="results-col" aria-label="검색 결과">
       <div class="results-head">
         <div class="status"><h2><span class="num">4</span>찾은 성취기준</h2><span id="count">성취기준 데이터를 불러오는 중이에요.</span></div>
-        <div class="reading" id="reading" aria-live="polite"></div>
         <div class="legend" id="legend" hidden title="강함: 드문 핵심어 여러 개 · 보통: 드문 핵심어 1개 · 약함: 흔한 말만">
           <span><span class="strength s3"><i><b></b><b></b><b></b></i>강함</span></span>
           <span><span class="strength s2"><i><b></b><b></b><b></b></i>보통</span></span>
@@ -321,6 +348,8 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); }
       </div>
       <div id="results" class="results" aria-live="polite"></div>
     </section>
+      <div class="legal">운영 김경민 · <a href="/privacy">개인정보처리방침</a> · <a href="/terms">이용약관</a> · 문의 themaniwant19@gmail.com · 성취기준 원문: 교육부 고시 제2022-34호 [별책 3] · 검색어 일부: 국립특수교육원(2023) 평가 자료</div>
+    </div>
   </div>
 </div>
 
@@ -341,7 +370,7 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); }
 <div class="toast" id="toast" hidden></div>
 
 <script type="module">
-import { buildIndex, search, buildPrompt } from "./search.js";
+import { buildIndex, search, buildPrompt, explainWords } from "./search.js";
 
 const $ = (id) => document.getElementById(id);
 const MODES = {
@@ -414,22 +443,40 @@ function syncPutButtons() {
   }
 }
 
+// 한 문장을 검색어로 어떻게 바꿨는지 보여준다: 핵심어 / 약하게 / 뺀 말 / 함께 찾은 말
+function renderExplain(text) {
+  const seen = new Set();
+  const words = explainWords(text).filter((w) => !seen.has(w.token) && seen.add(w.token)); // 같은 말은 한 번만
+  const chip = (w, cls) => `<span class="tok ${cls}">${esc(w.token)}${w.rest ? `<span class="rest">${esc(w.rest)}</span>` : ""}</span>`;
+  const row = (label, html) => html ? `<div class="ex-row"><span>${label}</span><span class="ex-chips">${html}</span></div>` : "";
+  const byKind = (k, cls) => words.filter((w) => w.kind === k).map((w) => chip(w, cls)).join("");
+  const groups = new Map();
+  for (const t of last.terms) {
+    const m = /^유의어\((.+)\)$/.exec(t.source); if (!m) continue;
+    if (!groups.has(m[1])) groups.set(m[1], []);
+    if (groups.get(m[1]).length < 4) groups.get(m[1]).push(t.token);
+  }
+  const syn = [...groups].slice(0, 4).map(([from, list]) => `<span class="syn-from">${esc(from)} →</span>` + list.map((x) => `<span class="tok s">${esc(x)}</span>`).join("")).join('<span class="syn-from">·</span>');
+  $("explain").innerHTML = `<p class="explain-title">이렇게 찾고 있어요<span>${Array.from($("q").value).length}/300</span></p>` +
+    row("핵심어", byKind("core", "q")) +
+    row("약하게·뺀 말", byKind("low", "low") + byKind("stop", "stop")) +
+    row("함께 찾은 말", syn);
+  $("explain").hidden = false;
+  $("q").closest("div").querySelector(".under").classList.add("has-text");
+}
+
 function render() {
   if (!index) return;
   const text = $("q").value.trim();
   if (!text) {
-    $("reading").innerHTML = ""; $("legend").hidden = true;
+    $("explain").hidden = true; $("q").closest("div").querySelector(".under").classList.remove("has-text"); $("legend").hidden = true;
     $("count").textContent = "";
     $("results").innerHTML = `<div class="empty start"><span class="big">${ICON.left}</span><b>왼쪽 2번 칸에 한 문장을 적어 주세요</b></div>`;
     last = null; return;
   }
   const lv = levels();
   last = search({ [mode]: text }, index, { limit: 15, schoolLevels: lv.length ? lv : ["없음"] });
-  const qTerms = last.terms.filter((t) => t.source === "query");
-  const sTerms = last.terms.filter((t) => t.source !== "query");
-  $("reading").innerHTML = "<span>검색에 쓴 말</span>" +
-    qTerms.map((t) => `<span class="tok ${t.core ? "q" : "low"}" title="${t.core ? "핵심어" : "앱 형식·조작을 뜻하는 말이라 적게 반영"}">${esc(t.token)}</span>`).join("") +
-    (sTerms.length ? `<span>· 함께 찾은 말</span>` + sTerms.slice(0, 6).map((t) => `<span class="tok s" title="${esc(t.source)}">${esc(t.token)}</span>`).join("") : "");
+  renderExplain(text);
   const n = last.results.length;
   const strong = last.results.filter((r) => r.strength === "강함").length;
   $("legend").hidden = !n;
