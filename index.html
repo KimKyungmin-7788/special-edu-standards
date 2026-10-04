@@ -115,10 +115,7 @@ h1 .l1 { color: var(--accent); }
 textarea#q { width: 100%; min-height: 76px; resize: vertical; font-size: 17px; line-height: 1.5; background: var(--field); border: 2px solid var(--line); border-radius: 14px; padding: 10px 14px; }
 textarea#q:focus { border-color: var(--accent); }
 textarea#q.waiting { border-color: var(--accent); box-shadow: 0 0 0 5px var(--accent-soft); }
-.under { display: flex; justify-content: space-between; gap: 10px; margin-top: 6px; font-size: 13px; color: var(--muted); line-height: 1.45; }
-.under.has-text { display: none; }
-.tip { display: flex; gap: 6px; align-items: flex-start; }
-.tip svg.i { color: var(--mid); font-size: 15px; margin-top: 2px; }
+.under { display: flex; justify-content: flex-end; gap: 10px; margin-top: 6px; font-size: 13px; color: var(--muted); line-height: 1.45; }
 .counter { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .levels { display: flex; gap: 8px; }
 .pill { flex: 1; min-height: 44px; border-radius: 999px; cursor: pointer; font-size: 15.5px; font-weight: 600; border: 2px solid var(--line); background: var(--field); color: var(--muted); padding: 6px 10px; }
@@ -157,10 +154,8 @@ textarea#q.waiting { border-color: var(--accent); box-shadow: 0 0 0 5px var(--ac
 .status { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 12px; margin: 0; font-size: 15px; color: var(--muted); }
 .status h2 { margin: 0; display: flex; align-items: center; gap: 10px; font-size: 17px; color: var(--ink); }
 .status b { color: var(--accent); font-size: 19px; }
-.explain { margin-top: 6px; background: var(--field); border: 1px solid var(--panel-line); border-radius: 14px; padding: 10px 12px; display: grid; gap: 6px; }
-.explain-title { margin: 0; display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; color: var(--accent); }
-.explain-title span { font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
-.ex-row { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 8px; align-items: baseline; }
+.explain { background: var(--field); border: 1px solid var(--panel-line); border-radius: 14px; padding: 10px 12px; display: grid; gap: 6px; }
+.ex-row { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 8px; align-items: baseline; }
 .ex-row > span:first-child { font-size: 12.5px; color: var(--muted); white-space: nowrap; }
 .ex-chips { display: flex; flex-wrap: wrap; gap: 4px; }
 .tok .rest { opacity: .45; }
@@ -243,7 +238,6 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); }
 /* 아주 낮은 화면: 검색어 풀이를 한 줄 흐름으로 */
 @media (min-width: 901px) and (max-height: 760px) {
   .explain { display: block; line-height: 1.9; }
-  .explain-title { margin-bottom: 2px; }
   .ex-row { display: inline; margin-right: 10px; }
   .ex-row > span:first-child { margin-right: 4px; }
   .ex-chips { display: inline; }
@@ -304,11 +298,10 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); }
           <label class="step todo" for="q"><span class="num">2</span><span id="q-label">수업 주제를 한 문장으로 적어 주세요.</span></label>
           <textarea id="q" rows="2" maxlength="300" autocomplete="off" placeholder="여기에 적어요. 예: 대중교통을 이용하여 목적지까지 이동하기"></textarea>
           <div class="under">
-            <span class="tip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg><span id="helper">배우는 내용이 드러나게 적어요. 예: 지폐와 동전으로 물건값 내기</span></span>
             <span class="counter" id="counter">0/300</span>
           </div>
-          <div class="explain" id="explain" aria-live="polite" hidden></div>
         </div>
+        <div class="explain" id="explain" aria-live="polite" hidden></div>
         <div>
           <p class="step done"><span class="num"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></span>학교급</p>
           <div class="levels" role="group" aria-label="학교급">
@@ -374,8 +367,8 @@ import { buildIndex, search, buildPrompt, explainWords } from "./search.js";
 
 const $ = (id) => document.getElementById(id);
 const MODES = {
-  topic: { label: "수업 주제를 한 문장으로 적어 주세요.", placeholder: "여기에 적어요. 예: 대중교통을 이용하여 목적지까지 이동하기", helper: "배우는 내용이 드러나게 적어요. 예: 지폐와 동전으로 물건값 내기", prompt: "수업 주제" },
-  app: { label: "앱 설명을 한 문장으로 적어 주세요.", placeholder: "여기에 적어요. 예: 내릴 곳에서 버스 하차 버튼을 눌러 스스로 버스 타기를 연습해요.", helper: "학생이 앱에서 하는 행동을 적어요. '게임'보다 '하차 벨 누르기'처럼요.", prompt: "앱 설명" },
+  topic: { label: "수업 주제를 한 문장으로 적어 주세요.", placeholder: "여기에 적어요. 예: 대중교통을 이용하여 목적지까지 이동하기", prompt: "수업 주제" },
+  app: { label: "앱 설명을 한 문장으로 적어 주세요.", placeholder: "여기에 적어요. 예: 내릴 곳에서 버스 하차 버튼을 눌러 스스로 버스 타기를 연습해요.", prompt: "앱 설명" },
 };
 const ICON = {
   book: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg>',
@@ -408,7 +401,6 @@ function setMode(m) {
   for (const b of document.querySelectorAll(".opt")) b.setAttribute("aria-checked", String(b.dataset.mode === m));
   $("q-label").textContent = MODES[m].label;
   $("q").placeholder = MODES[m].placeholder;
-  $("helper").textContent = MODES[m].helper;
   $("q").value = texts[m];
   updateCounter(); $("q").focus(); render();
 }
@@ -443,11 +435,11 @@ function syncPutButtons() {
   }
 }
 
-// 한 문장을 검색어로 어떻게 바꿨는지 보여준다: 핵심어 / 약하게 / 뺀 말 / 함께 찾은 말
+// 한 문장을 검색어로 어떻게 바꿨는지 보여준다: 검색에 쓴 단어(약하게 반영한 말은 점선) / 함께 찾은 단어
 function renderExplain(text) {
   const seen = new Set();
   const words = explainWords(text).filter((w) => !seen.has(w.token) && seen.add(w.token)); // 같은 말은 한 번만
-  const chip = (w, cls) => `<span class="tok ${cls}">${esc(w.token)}${w.rest ? `<span class="rest">${esc(w.rest)}</span>` : ""}</span>`;
+  const chip = (w, cls) => `<span class="tok ${cls}"${cls === "low" ? ' title="앱 형식·일반어라 적게 반영해요"' : ""}>${esc(w.token)}${w.rest ? `<span class="rest">${esc(w.rest)}</span>` : ""}</span>`;
   const row = (label, html) => html ? `<div class="ex-row"><span>${label}</span><span class="ex-chips">${html}</span></div>` : "";
   const byKind = (k, cls) => words.filter((w) => w.kind === k).map((w) => chip(w, cls)).join("");
   const groups = new Map();
@@ -457,19 +449,17 @@ function renderExplain(text) {
     if (groups.get(m[1]).length < 4) groups.get(m[1]).push(t.token);
   }
   const syn = [...groups].slice(0, 4).map(([from, list]) => `<span class="syn-from">${esc(from)} →</span>` + list.map((x) => `<span class="tok s">${esc(x)}</span>`).join("")).join('<span class="syn-from">·</span>');
-  $("explain").innerHTML = `<p class="explain-title">이렇게 찾고 있어요<span>${Array.from($("q").value).length}/300</span></p>` +
-    row("핵심어", byKind("core", "q")) +
-    row("약하게·뺀 말", byKind("low", "low") + byKind("stop", "stop")) +
-    row("함께 찾은 말", syn);
+  $("explain").innerHTML =
+    row("검색에 쓴 단어", byKind("core", "q") + byKind("low", "low")) +
+    row("함께 찾은 단어", syn);
   $("explain").hidden = false;
-  $("q").closest("div").querySelector(".under").classList.add("has-text");
 }
 
 function render() {
   if (!index) return;
   const text = $("q").value.trim();
   if (!text) {
-    $("explain").hidden = true; $("q").closest("div").querySelector(".under").classList.remove("has-text"); $("legend").hidden = true;
+    $("explain").hidden = true; $("legend").hidden = true;
     $("count").textContent = "";
     $("results").innerHTML = `<div class="empty start"><span class="big">${ICON.left}</span><b>왼쪽 2번 칸에 한 문장을 적어 주세요</b></div>`;
     last = null; return;
