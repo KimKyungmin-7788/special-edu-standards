@@ -494,7 +494,12 @@ async function copy(text, target) {
   catch { if (target) { target.focus(); target.select(); } return false; }
 }
 function levels() { return ["lv-e", "lv-m", "lv-h"].map($).filter((b) => b.getAttribute("aria-pressed") === "true").map((b) => b.dataset.level); }
-function updateCounter() { $("clear-query").hidden = !$("q").value.length; $("counter").textContent = `${Array.from($("q").value).length}/300`; }
+function resizeQuery() {
+  const input = $("q");
+  input.style.height = "auto";
+  input.style.height = `${Math.max(58, input.scrollHeight)}px`;
+}
+function updateCounter() { resizeQuery(); $("clear-query").hidden = !$("q").value.length; $("counter").textContent = `${Array.from($("q").value).length}/300`; }
 const inBasket = (code) => basket.some((s) => s.code === code);
 
 function setMode(m) {
@@ -706,6 +711,8 @@ $("basket-dock").addEventListener("click", () => {
   section.focus({ preventScroll: true });
   section.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "start" });
 });
+new ResizeObserver(resizeQuery).observe(document.querySelector(".composer"));
+document.fonts.ready.then(resizeQuery);
 renderBasket(); updateCounter();
 if (matchMedia("(pointer: fine)").matches) $("q").focus({ preventScroll: true }); // 컴퓨터에서만 (휴대폰은 키보드가 올라와서 제외)
 try {

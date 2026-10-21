@@ -181,3 +181,21 @@ h1, h2, h3,
 .clear-query { position: absolute; top: 9px; right: 9px; width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 10px; background: transparent; color: var(--muted); cursor: pointer; touch-action: manipulation; }
 .clear-query svg { width: 19px; height: 19px; }
 .clear-query:hover { background: var(--accent-soft); color: var(--accent); }
+
+/* 입력 길이와 화면 너비에 맞춰 높이를 늘리고 내부 스크롤을 없앤다. */
+.landing .composer textarea#q { display: block; resize: none; overflow: hidden; overflow-wrap: anywhere; }
+.composer, #search-form, .ex-chips { min-width: 0; }
+.stmt, .basket-list .t { overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  .landing .composer textarea#q { font-size: 17px; line-height: 1.5; }
+  .item .item-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; min-width: 0; }
+  .item .small-btn { min-height: 48px; min-width: 0; padding: 10px 8px; font-size: 14px; white-space: nowrap; }
+  .landing .levels .pill { min-height: 44px; }
+  .basket-list li { grid-template-columns: auto minmax(0, 1fr); }
+  .basket-list .mini { grid-column: 2; justify-content: flex-end; }
+  .mini button { width: 44px; height: 44px; }
+}
+@media (max-width: 600px) {
+  .landing .ex-row { grid-template-columns: 88px minmax(0, 1fr); gap: 8px; }
+  .landing .ex-chips { overflow-wrap: anywhere; }
+}
