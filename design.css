@@ -131,3 +131,43 @@ body { background: var(--bg); }
 
 /* 검색 전 삽화는 크고 은은한 배경 상징으로 보여 준다. */
 .empty-art img { width: 260px; height: 234px; opacity: .48; }
+
+/* 명조 제목, 산세리프 본문, 또렷한 보조 정보의 서체 조합. */
+:root {
+  --font-heading: 'Nanum Myeongjo', serif;
+  --font-body: 'Pretendard', sans-serif;
+  --font-accent: 'IBM Plex Sans KR', sans-serif;
+  --font-display: var(--font-heading);
+}
+body { font-family: var(--font-body); line-height: 1.72; }
+h1, h2, h3,
+.landing h1, .level > h2, .subject > h3 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+}
+.accent, .eyebrow, .code, .band, .counter, .strength, .ex-row > span:first-child {
+  font-family: var(--font-accent);
+}
+.item .item-actions { gap: 8px; flex-wrap: wrap; }
+.item .small-btn {
+  min-height: 44px;
+  min-width: 80px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--sheet);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+  justify-content: center;
+  gap: 7px;
+  touch-action: manipulation;
+}
+.item .small-btn svg { width: 18px; height: 18px; }
+.item .small-btn.put { border-color: var(--accent-tint); background: var(--accent-soft); }
+.item .small-btn:hover { border-color: var(--accent); }
+.item .small-btn.put[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+@media (max-width: 600px) {
+  .item .item-actions { width: 100%; margin-top: 6px; }
+  .item .small-btn { flex: 1; min-height: 46px; }
+}
