@@ -263,15 +263,97 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); }
 @media (prefers-reduced-motion: no-preference) {
   .item, .opt, .pill, .btn, .small-btn { transition: background .15s, border-color .15s, color .15s, box-shadow .15s; }
 }
+
+/* 입력창을 유지하고 검색 결과를 아래로 이어서 보여 준다. */
+.intro { display: none; }
+.composer { background: var(--field); border: 1px solid var(--line); border-radius: 20px; padding: 14px; box-shadow: var(--shadow); }
+.composer:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow); }
+.composer textarea#q:focus-visible { outline: none; }
+.composer textarea#q { border: 0; border-radius: 8px; padding: 8px; box-shadow: none; min-height: 84px; resize: vertical; background: transparent; }
+.composer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.composer-bottom .counter { color: var(--muted); font-size: 12px; padding-left: 8px; }
+.search-submit { min-height: 44px; font-size: 14px; border-radius: 12px; }
+.search-submit span { font-size: 22px; margin-left: 8px; }
+.search-hint { font-size: 12px; color: var(--muted); margin: 12px 0 0; }
+.examples, .landing-footer { display: none; }
+.landing .app { max-width: 780px; min-height: calc(100svh - 100px); height: auto; display: flex; flex-direction: column; justify-content: flex-start; gap: 20px; padding-block: 36px 32px; }
+.landing .main { display: block; }
+.landing .col { overflow: visible; }
+.landing .brand { gap: 12px; }
+.landing .mode-settings, .landing .level-settings, .landing .actions, .landing .basket, .landing .rcol, .landing .explain { display: none; }
+.landing h1 { font-family: var(--font-body); font-weight: 600; font-size: clamp(19px, 4.6vw, 36px); letter-spacing: -.045em; line-height: 1.3; }
+.landing h1 .l1 { display: inline; font-size: inherit; font-weight: inherit; letter-spacing: inherit; }
+.landing h1 { white-space: nowrap; }
+.landing .eyebrow { font-size: clamp(10px, 2.7vw, 13px); }
+.landing .eyebrow svg { display: none; }
+.landing .intro { display: block; margin: 0; font-size: 16px; color: var(--muted); text-wrap: balance; }
+.landing .inputs { border: 0; background: none; padding: 0; display: block; }
+.landing label[for="q"] { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.landing .composer { padding: 12px 16px; border-radius: 20px; }
+.landing .composer textarea#q { font-size: 18px; min-height: 52px; height: 58px; }
+.landing .search-hint { text-align: center; font-size: 13px; }
+.landing .examples { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.examples button { border: 1px solid var(--line); background: var(--sheet); border-radius: 999px; padding: 10px 16px; font-size: 13px; color: var(--muted); cursor: pointer; }
+.examples button:hover { border-color: var(--accent); color: var(--accent); }
+.examples button span { margin-left: 8px; color: var(--accent); }
+.landing .landing-footer { display: block; text-align: center; color: var(--muted); font-size: 11px; line-height: 2; padding: 16px 0 24px; }
+.landing-footer a { color: inherit; text-decoration: none; }
+.landing-footer a:hover { text-decoration: underline; }
+@media (max-width: 480px) {
+  .landing .app { padding-top: 24px; gap: 18px; }
+  .landing .composer { padding: 10px 12px; }
+  .landing .composer textarea#q { font-size: 17px; }
+  .landing .intro { font-size: 14px; }
+  .landing .examples { gap: 8px; }
+  .examples button { padding: 8px 12px; font-size: 12px; }
+}
+
+/* 실시간 결과도 같은 너비의 페이지 흐름 안에 배치한다. */
+html, body { height: auto; min-height: 100%; }
+.landing.has-query .examples { display: none; }
+.landing.has-query .explain:not([hidden]) { display: grid; margin-top: 24px; }
+.landing.has-query .level-settings { display: block; margin-top: 20px; }
+.landing .level-settings .step { display: none; }
+.landing .levels { justify-content: flex-start; }
+.landing .levels .pill { flex: none; font-size: 13px; min-height: 36px; padding: 5px 16px; }
+.landing.has-query .rcol { display: flex; margin-top: 24px; gap: 16px; }
+.landing.has-query .actions { display: grid; }
+.landing.has-query .basket { display: flex; min-height: 0; }
+.landing .results-col { flex: none; overflow: visible; }
+.landing .results { overflow: visible; }
+.landing .grid { grid-template-columns: 1fr; }
+.landing .basket-list { overflow: visible; }
+.landing .rcol .legal { display: none; }
+@media (max-width: 480px) {
+  .landing .ex-row { grid-template-columns: 1fr; gap: 4px; }
+  .landing .results { padding: 14px; }
+  .landing .item { padding: 12px; }
+}
+
+.composer-bottom { justify-content: flex-end; }
+.basket-dock { position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: calc(20px + env(safe-area-inset-bottom)); z-index: 12; display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 12px 18px; border: 1px solid var(--accent); border-radius: 999px; background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow); cursor: pointer; font-size: 14px; font-weight: 600; }
+.basket-dock > svg { width: 24px; height: 24px; }
+.dock-count { display: grid; place-items: center; min-width: 26px; height: 26px; padding: 0 6px; border-radius: 999px; background: var(--accent-ink); color: var(--accent); font-variant-numeric: tabular-nums; }
+.basket-flyer { position: fixed; z-index: 20; width: 36px; height: 36px; display: grid; place-items: center; background: var(--accent); color: var(--accent-ink); border-radius: 10px; box-shadow: var(--shadow); pointer-events: none; }
+#basket-section { scroll-margin-top: 24px; margin-bottom: 80px; }
+.landing.basket-open .rcol { display: flex; margin-top: 24px; gap: 16px; }
+.landing.basket-open .basket { display: flex; min-height: 0; }
+.landing.basket-open:not(.has-query) .results-col { display: none; }
+.landing .landing-footer { padding-bottom: 100px; }
+@media (max-width: 480px) {
+  .basket-dock { right: 14px; bottom: calc(14px + env(safe-area-inset-bottom)); padding: 12px; }
+  .toast { bottom: calc(88px + env(safe-area-inset-bottom)); }
+}
 </style>
 
+<link rel="stylesheet" href="./design.css">
 </head>
-<body>
+<body class="landing">
 <div class="app">
   <header class="bar-top">
     <div class="brand">
-      <div class="eyebrow"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg>2022 개정 특수교육 기본 교육과정 · 초·중·고 688개 성취기준</div>
-      <h1><span class="l1">여기여기 모여라!</span> 관련 성취기준</h1>
+      <div class="eyebrow"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg>2022 개정 특수교육 기본 교육과정 · 688개 성취기준</div>
+      <div class="title-lockup"><img class="brand-mark" src="./cards-mark.svg" alt="" aria-hidden="true"><h1><span class="l1">여기여기 모여라,</span> 관련성취기준</h1></div>
     </div>
   </header>
 
@@ -279,7 +361,7 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); }
     <!-- 왼쪽: 입력·버튼·바구니 -->
     <div class="col">
       <section class="card inputs" aria-label="검색">
-        <div>
+        <div class="mode-settings">
           <p class="step done" id="mode-label"><span class="num"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></span>무엇으로 찾을까요?</p>
           <div class="toggle" role="radiogroup" aria-labelledby="mode-label">
             <button type="button" class="opt" role="radio" id="mode-topic" data-mode="topic" aria-checked="true">
@@ -294,15 +376,27 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); }
             </button>
           </div>
         </div>
-        <div>
-          <label class="step todo" for="q"><span class="num">2</span><span id="q-label">수업 주제를 한 문장으로 적어 주세요.</span></label>
-          <textarea id="q" rows="2" maxlength="300" autocomplete="off" placeholder="여기에 적어요. 예: 대중교통을 이용하여 목적지까지 이동하기"></textarea>
-          <div class="under">
+        <form id="search-form">
+          <label class="step todo" for="q"><span id="q-label">수업을 한문장으로 써보세요</span></label>
+          <div class="composer">
+          <textarea id="q" rows="2" maxlength="300" autocomplete="off" placeholder="수업을 한문장으로 써보세요" aria-describedby="search-hint"></textarea>
+          <div class="composer-bottom">
             <span class="counter" id="counter">0/300</span>
           </div>
-        </div>
+          </div>
+          <p id="search-hint" class="search-hint" role="status">성취기준을 준비하고 있어요.</p>
+          <div class="examples" aria-label="예시로 검색하기">
+            <button type="button" data-example="마트에서 물건을 사고 돈을 계산해요">마트에서 장보기 <span aria-hidden="true">↗</span></button>
+            <button type="button" data-example="대중교통을 이용하여 목적지까지 이동해요">스스로 버스 타기 <span aria-hidden="true">↗</span></button>
+            <button type="button" data-example="내 감정을 알고 친구에게 표현해요">마음 표현하기 <span aria-hidden="true">↗</span></button>
+          </div>
+        </form>
+        <figure class="empty-art" aria-label="성취기준 카드가 모이는 모습">
+          <img src="./cards-mark.svg" alt="" width="120" height="108">
+          <figcaption>수업의 아이디어를 성취기준으로.</figcaption>
+        </figure>
         <div class="explain" id="explain" aria-live="polite" hidden></div>
-        <div>
+        <div class="level-settings">
           <p class="step done"><span class="num"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></span>학교급</p>
           <div class="levels" role="group" aria-label="학교급">
             <button type="button" class="pill" id="lv-e" data-level="초등학교" aria-pressed="true">초등학교</button>
@@ -310,21 +404,10 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); }
             <button type="button" class="pill" id="lv-h" data-level="고등학교" aria-pressed="true">고등학교</button>
           </div>
         </div>
-        <div class="actions">
-          <button class="btn ghost" id="copy-list" type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>결과 목록 전체 복사</button>
-          <button class="btn" id="copy-prompt" type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>AI에게 더 묻기</button>
-        </div>
+
       </section>
 
-      <section class="card basket" aria-label="성취기준 바구니">
-        <div class="basket-head">
-          <h2><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18l-2 11H5z"/><path d="M8 9l4-6 4 6"/><path d="M9 13v4M15 13v4"/></svg>성취기준 바구니 <span class="badge" id="basket-count">0</span></h2>
-          <button class="linkbtn" id="basket-clear" type="button">비우기</button>
-        </div>
-        <ol class="basket-list" id="basket-list"></ol>
-        <div class="basket-empty" id="basket-empty" aria-hidden="true"></div>
-        <button class="btn" id="basket-copy" type="button" disabled><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>담은 성취기준 복사</button>
-      </section>
+
 
     </div>
 
@@ -332,7 +415,7 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); }
     <div class="rcol">
     <section class="results-col" aria-label="검색 결과">
       <div class="results-head">
-        <div class="status"><h2><span class="num">4</span>찾은 성취기준</h2><span id="count">성취기준 데이터를 불러오는 중이에요.</span></div>
+        <div class="status"><h2>찾은 성취기준</h2><span id="count">성취기준 데이터를 불러오는 중이에요.</span></div>
         <div class="legend" id="legend" hidden title="강함: 드문 핵심어 여러 개 · 보통: 드문 핵심어 1개 · 약함: 흔한 말만">
           <span><span class="strength s3"><i><b></b><b></b><b></b></i>강함</span></span>
           <span><span class="strength s2"><i><b></b><b></b><b></b></i>보통</span></span>
@@ -341,10 +424,24 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); }
       </div>
       <div id="results" class="results" aria-live="polite"></div>
     </section>
+        <div class="actions">
+          <button class="btn ghost" id="copy-list" type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>결과 목록 전체 복사</button>
+          <button class="btn" id="copy-prompt" type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>AI에게 더 묻기</button>
+        </div>
+      <section class="card basket" id="basket-section" tabindex="-1" aria-label="성취기준 바구니">
+        <div class="basket-head">
+          <h2><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18l-2 11H5z"/><path d="M8 9l4-6 4 6"/><path d="M9 13v4M15 13v4"/></svg>성취기준 바구니 <span class="badge" id="basket-count">0</span></h2>
+          <button class="linkbtn" id="basket-clear" type="button">비우기</button>
+        </div>
+        <ol class="basket-list" id="basket-list"></ol>
+        <div class="basket-empty" id="basket-empty" aria-hidden="true"></div>
+        <button class="btn" id="basket-copy" type="button" disabled><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>담은 성취기준 복사</button>
+      </section>
       <div class="legal">운영 김경민 · <a href="/privacy">개인정보처리방침</a> · <a href="/terms">이용약관</a> · 문의 themaniwant19@gmail.com · 성취기준 원문: 교육부 고시 제2022-34호 [별책 3] · 검색어 일부: 국립특수교육원(2023) 평가 자료</div>
     </div>
   </div>
 </div>
+<footer class="landing-footer"><a href="/privacy">개인정보처리방침</a><span> · </span><a href="/terms">이용약관</a></footer>
 
 <dialog id="prompt-dialog" aria-labelledby="dlg-title">
   <div class="dlg">
@@ -360,14 +457,18 @@ dialog::backdrop { background: rgba(10, 20, 15, .45); }
     <textarea id="prompt" class="promptbox" readonly></textarea>
   </div>
 </dialog>
-<div class="toast" id="toast" hidden></div>
+<button type="button" class="basket-dock" id="basket-dock" aria-label="성취기준 바구니, 0개" aria-controls="basket-section">
+  <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18l-2 11H5z"/><path d="M8 9l4-6 4 6"/><path d="M9 13v4M15 13v4"/></svg>
+  <span class="dock-count" id="dock-count" aria-live="polite" aria-atomic="true">0</span>
+</button>
+<div class="toast" id="toast" hidden role="status"></div>
 
 <script type="module">
 import { buildIndex, search, buildPrompt, explainWords } from "./search.js";
 
 const $ = (id) => document.getElementById(id);
 const MODES = {
-  topic: { label: "수업 주제를 한 문장으로 적어 주세요.", placeholder: "여기에 적어요. 예: 대중교통을 이용하여 목적지까지 이동하기", prompt: "수업 주제" },
+  topic: { label: "수업을 한문장으로 써보세요", placeholder: "수업을 한문장으로 써보세요", prompt: "수업 주제" },
   app: { label: "앱 설명을 한 문장으로 적어 주세요.", placeholder: "여기에 적어요. 예: 내릴 곳에서 버스 하차 버튼을 눌러 스스로 버스 타기를 연습해요.", prompt: "앱 설명" },
 };
 const ICON = {
@@ -392,7 +493,7 @@ async function copy(text, target) {
   catch { if (target) { target.focus(); target.select(); } return false; }
 }
 function levels() { return ["lv-e", "lv-m", "lv-h"].map($).filter((b) => b.getAttribute("aria-pressed") === "true").map((b) => b.dataset.level); }
-function updateCounter() { $("counter").textContent = `${Array.from($("q").value).length}/300`; $("q").classList.toggle("waiting", !$("q").value.trim()); }
+function updateCounter() { $("counter").textContent = `${Array.from($("q").value).length}/300`; }
 const inBasket = (code) => basket.some((s) => s.code === code);
 
 function setMode(m) {
@@ -406,6 +507,8 @@ function setMode(m) {
 }
 
 function renderBasket() {
+  $("dock-count").textContent = basket.length;
+  $("basket-dock").setAttribute("aria-label", `성취기준 바구니, ${basket.length}개`);
   $("basket-count").textContent = basket.length;
   $("basket-empty").hidden = basket.length > 0;
   $("basket-list").hidden = basket.length === 0;
@@ -420,10 +523,33 @@ function renderBasket() {
       <button type="button" data-remove="${esc(s.code)}" aria-label="빼기" title="빼기">${ICON.x}</button>
     </span></li>`).join("");
 }
-function toggleBasket(code) {
+function animateToBasket(source) {
+  if (!source || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const start = source.getBoundingClientRect();
+  const end = $("basket-dock").getBoundingClientRect();
+  const flyer = document.createElement("span");
+  flyer.className = "basket-flyer";
+  flyer.setAttribute("aria-hidden", "true");
+  flyer.innerHTML = ICON.book;
+  flyer.style.left = `${start.left + start.width / 2 - 18}px`;
+  flyer.style.top = `${start.top + start.height / 2 - 18}px`;
+  document.body.append(flyer);
+  const dx = end.left + end.width / 2 - start.left - start.width / 2;
+  const dy = end.top + end.height / 2 - start.top - start.height / 2;
+  const flight = flyer.animate([
+    { transform: "translate(0, 0) scale(1)", opacity: 1 },
+    { transform: `translate(${dx * .45}px, ${dy * .4 - 70}px) scale(1.1)`, opacity: 1, offset: .45 },
+    { transform: `translate(${dx}px, ${dy}px) scale(.25)`, opacity: .2 }
+  ], { duration: 650, easing: "ease-in-out" });
+  flight.finished.then(() => {
+    flyer.remove();
+    $("basket-dock").animate([{ transform: "scale(1)" }, { transform: "scale(1.1)" }, { transform: "scale(1)" }], { duration: 260 });
+  }).catch(() => flyer.remove());
+}
+function toggleBasket(code, source) {
   const i = basket.findIndex((s) => s.code === code);
   if (i >= 0) { basket.splice(i, 1); toast("바구니에서 뺐어요"); }
-  else { const s = all.find((x) => x.code === code); if (s) basket.push(s); toast(`바구니에 담았어요 (${basket.length}개)`); }
+  else { const s = all.find((x) => x.code === code); if (s) { basket.push(s); animateToBasket(source); } toast(`바구니에 담았어요 (${basket.length}개)`); }
   renderBasket(); syncPutButtons();
 }
 function syncPutButtons() {
@@ -458,10 +584,11 @@ function renderExplain(text) {
 function render() {
   if (!index) return;
   const text = $("q").value.trim();
+  document.body.classList.toggle("has-query", Boolean(text));
   if (!text) {
     $("explain").hidden = true; $("legend").hidden = true;
     $("count").textContent = "";
-    $("results").innerHTML = `<div class="empty start"><span class="big">${ICON.left}</span><b>왼쪽 2번 칸에 한 문장을 적어 주세요</b></div>`;
+    $("results").innerHTML = `<div class="empty start"><b>수업을 한 문장으로 적어 주세요.</b></div>`;
     last = null; return;
   }
   const lv = levels();
@@ -519,7 +646,21 @@ async function showPrompt() {
 }
 
 let timer;
-$("q").addEventListener("input", () => { updateCounter(); clearTimeout(timer); timer = setTimeout(render, 180); });
+function submitSearch() {
+  if (!index || !$("q").value.trim()) return;
+  clearTimeout(timer); render();
+}
+$("search-form").addEventListener("submit", (e) => { e.preventDefault(); submitSearch(); });
+$("q").addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); submitSearch(); }
+});
+for (const b of document.querySelectorAll("[data-example]")) b.addEventListener("click", () => {
+  $("q").value = b.dataset.example; updateCounter(); submitSearch();
+});
+$("q").addEventListener("input", () => {
+  updateCounter(); clearTimeout(timer);
+  timer = setTimeout(render, 100);
+});
 for (const b of document.querySelectorAll(".opt")) b.addEventListener("click", () => b.dataset.mode !== mode && setMode(b.dataset.mode));
 document.querySelector(".toggle").addEventListener("keydown", (e) => {
   if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) { e.preventDefault(); setMode(mode === "topic" ? "app" : "topic"); $("mode-" + mode).focus(); }
@@ -535,7 +676,7 @@ $("copy-list").addEventListener("click", async () => {
   toast((await copy(text)) ? "결과 목록 전체를 복사했어요" : "복사하지 못했어요");
 });
 $("results").addEventListener("click", async (e) => {
-  const put = e.target.closest("[data-put]"); if (put) { toggleBasket(put.dataset.put); return; }
+  const put = e.target.closest("[data-put]"); if (put) { toggleBasket(put.dataset.put, put); return; }
   const b = e.target.closest("[data-copy]"); if (!b) return;
   toast((await copy(b.dataset.copy)) ? "성취기준을 복사했어요" : "복사하지 못했어요");
 });
@@ -552,6 +693,12 @@ $("basket-copy").addEventListener("click", async () => {
   toast((await copy(text)) ? `담은 성취기준 ${basket.length}개를 복사했어요` : "복사하지 못했어요");
 });
 
+$("basket-dock").addEventListener("click", () => {
+  document.body.classList.add("basket-open");
+  const section = $("basket-section");
+  section.focus({ preventScroll: true });
+  section.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "start" });
+});
 renderBasket(); updateCounter();
 if (matchMedia("(pointer: fine)").matches) $("q").focus({ preventScroll: true }); // 컴퓨터에서만 (휴대폰은 키보드가 올라와서 제외)
 try {
@@ -560,9 +707,10 @@ try {
     fetch("./synonyms.json").then((r) => r.json()),
   ]);
   all = S; index = buildIndex(S, SYN);
-  render();
+  $("search-hint").textContent = "입력하면 아래에 관련 성취기준이 바로 나타나요.";
+  updateCounter(); render();
 } catch (err) {
-  $("count").textContent = "성취기준 데이터를 불러오지 못했어요. 페이지를 새로고침해 주세요.";
+  $("search-hint").textContent = $("count").textContent = "성취기준 데이터를 불러오지 못했어요. 페이지를 새로고침해 주세요.";
 }
 </script>
 
