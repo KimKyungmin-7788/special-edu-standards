@@ -1,3 +1,5 @@
+@font-face { font-family: 'SpokaHanSansNeo'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff') format('woff'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'SpokaHanSansNeo'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Bold.woff') format('woff'); font-weight: 700; font-style: normal; font-display: swap; }
 /* Paper, sage and ink: the gathering-cards visual identity. */
 :root {
   --bg: #faf9f6; --sheet: #fff; --sheet-2: #f5f5ef; --field: #fff;
@@ -132,18 +134,18 @@ body { background: var(--bg); }
 /* 검색 전 삽화는 크고 은은한 배경 상징으로 보여 준다. */
 .empty-art img { width: 260px; height: 234px; opacity: .48; }
 
-/* 명조 제목, 산세리프 본문, 또렷한 보조 정보의 서체 조합. */
+/* IBM 제목, 스포카 본문, 도현 보조 정보의 서체 조합. */
 :root {
-  --font-heading: 'Nanum Myeongjo', serif;
-  --font-body: 'Pretendard', sans-serif;
-  --font-accent: 'IBM Plex Sans KR', sans-serif;
+  --font-heading: 'IBM Plex Sans KR', sans-serif;
+  --font-body: 'SpokaHanSansNeo', sans-serif;
+  --font-accent: 'Do Hyeon', sans-serif;
   --font-display: var(--font-heading);
 }
-body { font-family: var(--font-body); line-height: 1.72; }
+body { font-family: var(--font-body); line-height: 1.5; }
 h1, h2, h3,
 .landing h1, .level > h2, .subject > h3 {
   font-family: var(--font-heading);
-  font-weight: 800;
+  font-weight: 600;
 }
 .accent, .eyebrow, .code, .band, .counter, .strength, .ex-row > span:first-child {
   font-family: var(--font-accent);
@@ -171,3 +173,5 @@ h1, h2, h3,
   .item .item-actions { width: 100%; margin-top: 6px; }
   .item .small-btn { flex: 1; min-height: 46px; }
 }
+
+.stmt { line-height: 1.5; }
