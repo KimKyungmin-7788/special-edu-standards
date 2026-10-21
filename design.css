@@ -199,3 +199,28 @@ h1, h2, h3,
   .landing .ex-row { grid-template-columns: 88px minmax(0, 1fr); gap: 8px; }
   .landing .ex-chips { overflow-wrap: anywhere; }
 }
+
+/* 모바일 바구니는 전용 하단 영역에 두어 카드 버튼과 겹치지 않는다. */
+@media (max-width: 600px) {
+  body.landing {
+    height: 100dvh;
+    min-height: 0;
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+    overflow: hidden;
+  }
+  .landing .app {
+    height: 100%;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 24px;
+    scrollbar-gutter: stable;
+  }
+  .landing .app > .bar-top, .landing .app > .main { flex-shrink: 0; }
+  .landing .landing-footer { position: fixed; left: 16px; bottom: calc(28px + env(safe-area-inset-bottom, 0px)); max-width: calc(100% - 104px); padding: 0; text-align: left; font-size: 10px; line-height: 1.5; }
+  .basket-dock {
+    right: max(16px, env(safe-area-inset-right, 0px));
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+  .landing .item { scroll-margin-bottom: 16px; }
+}
