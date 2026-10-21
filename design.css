@@ -175,3 +175,9 @@ h1, h2, h3,
 }
 
 .stmt { line-height: 1.5; }
+
+.composer { position: relative; }
+.landing .composer textarea#q { padding-right: 44px; }
+.clear-query { position: absolute; top: 9px; right: 9px; width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 10px; background: transparent; color: var(--muted); cursor: pointer; touch-action: manipulation; }
+.clear-query svg { width: 19px; height: 19px; }
+.clear-query:hover { background: var(--accent-soft); color: var(--accent); }

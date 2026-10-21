@@ -379,6 +379,7 @@ html, body { height: auto; min-height: 100%; }
         <form id="search-form">
           <label class="step todo" for="q"><span id="q-label">한 단어, 한 문장으로 선생님의 수업을 써보세요.</span></label>
           <div class="composer">
+          <button type="button" id="clear-query" class="clear-query" aria-label="입력 내용 모두 지우기" title="입력 내용 모두 지우기" hidden><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
           <textarea id="q" rows="2" maxlength="300" autocomplete="off" placeholder="한 단어, 한 문장으로 선생님의 수업을 써보세요." aria-describedby="search-hint"></textarea>
           <div class="composer-bottom">
             <span class="counter" id="counter">0/300</span>
@@ -493,7 +494,7 @@ async function copy(text, target) {
   catch { if (target) { target.focus(); target.select(); } return false; }
 }
 function levels() { return ["lv-e", "lv-m", "lv-h"].map($).filter((b) => b.getAttribute("aria-pressed") === "true").map((b) => b.dataset.level); }
-function updateCounter() { $("counter").textContent = `${Array.from($("q").value).length}/300`; }
+function updateCounter() { $("clear-query").hidden = !$("q").value.length; $("counter").textContent = `${Array.from($("q").value).length}/300`; }
 const inBasket = (code) => basket.some((s) => s.code === code);
 
 function setMode(m) {
@@ -646,6 +647,12 @@ async function showPrompt() {
 }
 
 let timer;
+$("clear-query").addEventListener("click", () => {
+  clearTimeout(timer);
+  $("q").value = ""; texts[mode] = "";
+  updateCounter(); render();
+  $("q").focus({ preventScroll: true });
+});
 function submitSearch() {
   if (!index || !$("q").value.trim()) return;
   clearTimeout(timer); render();
