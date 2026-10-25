@@ -355,6 +355,7 @@ html, body { height: auto; min-height: 100%; }
       <div class="eyebrow"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg>2022 개정 특수교육 기본 교육과정 · 688개 성취기준</div>
       <div class="title-lockup"><img class="brand-mark" src="./cards-mark.svg" alt="" aria-hidden="true"><h1><span class="l1">여기여기 모여라,</span> 관련성취기준</h1></div>
     </div>
+    <button class="browse-button" id="browse-standards" type="button" aria-haspopup="dialog">전체 성취기준 둘러보기 <span aria-hidden="true">↗</span></button>
   </header>
 
   <div class="main">
@@ -444,6 +445,14 @@ html, body { height: auto; min-height: 100%; }
 </div>
 <footer class="landing-footer"><a href="/privacy">개인정보처리방침</a><span> · </span><a href="/terms">이용약관</a></footer>
 
+<dialog id="standards-dialog" aria-labelledby="tree-title" aria-describedby="tree-description">
+  <div class="tree-shell">
+    <header class="tree-header"><div><h2 id="tree-title">전체 성취기준</h2><p id="tree-description">학교급 → 교과 → 학년군 → 영역 · 688개<br>항목을 펼쳐 살펴보고, 체크해서 한 번에 담으세요.</p></div><button class="tree-close" id="tree-close" type="button" aria-label="전체 성취기준 닫기">✕</button></header>
+    <div class="tree-toolbar"><button id="tree-expand" type="button">모두 펼치기</button><button id="tree-collapse" type="button">모두 접기</button><button id="tree-clear" type="button">선택 해제</button></div>
+    <div class="standards-tree" id="standards-tree" aria-label="학교급별 성취기준"></div>
+    <footer class="tree-footer"><strong id="tree-count" aria-live="polite">0개 선택</strong><div class="tree-actions"><button id="tree-add" class="btn ghost" type="button" disabled>선택 담기</button><button id="tree-copy" class="btn" type="button" disabled>선택 담고 복사</button></div><p id="tree-status" role="status"></p><textarea id="tree-fallback" readonly hidden aria-label="선택한 성취기준 복사 내용"></textarea></footer>
+  </div>
+</dialog>
 <dialog id="prompt-dialog" aria-labelledby="dlg-title">
   <div class="dlg">
     <div class="dlg-head">
@@ -466,6 +475,7 @@ html, body { height: auto; min-height: 100%; }
 
 <script type="module">
 import { buildIndex, search, buildPrompt, explainWords } from "./search.js";
+import { mountStandardsBrowser } from "./standards-browser.js";
 
 const $ = (id) => document.getElementById(id);
 const MODES = {
@@ -713,6 +723,10 @@ $("basket-dock").addEventListener("click", () => {
 });
 new ResizeObserver(resizeQuery).observe(document.querySelector(".composer"));
 document.fonts.ready.then(resizeQuery);
+mountStandardsBrowser({ getStandards: () => all, getBasket: () => basket, addToBasket: (items) => {
+  for (const s of items) if (!inBasket(s.code)) basket.push(s);
+  renderBasket(); syncPutButtons();
+}});
 renderBasket(); updateCounter();
 if (matchMedia("(pointer: fine)").matches) $("q").focus({ preventScroll: true }); // 컴퓨터에서만 (휴대폰은 키보드가 올라와서 제외)
 try {
