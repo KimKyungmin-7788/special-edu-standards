@@ -263,3 +263,15 @@ h1, h2, h3,
   .tree-actions { width: 100%; }
   .tree-actions .btn { flex: 1; min-height: 48px; font-size: 14px; }
 }
+
+.tree-search-wrap { padding: 4px 24px 0; flex-shrink: 0; }
+.tree-search-wrap label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.tree-search-field { display: flex; align-items: center; border: 1px solid var(--line); border-radius: 10px; background: var(--field); }
+.tree-search-field:focus-within { border-color: var(--accent); }
+#tree-search { width: 100%; min-width: 0; min-height: 46px; border: 0; background: transparent; border-radius: 10px; padding: 10px 12px; font-size: 16px; }
+#tree-search-reset { flex-shrink: 0; width: 44px; height: 44px; border: 0; background: transparent; color: var(--muted); cursor: pointer; }
+#tree-search-count { font-size: 12px; color: var(--muted); margin: 6px 0; }
+.tree-no-results { color: var(--muted); padding: 16px 0; }
+.tree-footer > strong { font-size: 13px; }
+.tree-toolbar, .tree-footer { flex-shrink: 0; }
+@media (max-width: 600px) { .tree-search-wrap { padding: 4px 12px 0; } }

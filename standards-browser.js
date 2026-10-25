@@ -8,7 +8,25 @@ export function mountStandardsBrowser({ getStandards, getBasket, addToBasket }) 
   const groups = new Map();
   const fields = ['school_level', 'subject', 'grade_band', 'domain'];
   const escape = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  let built = false;
+  const query = document.getElementById('tree-search');
+  const searchCount = document.getElementById('tree-search-count');
+  const normalize = value => value.normalize('NFKC').toLowerCase().replace(/[\s\[\]\-–—]/g, '');
+  function filterTree() {
+    const terms = query.value.trim().split(/\s+/).filter(Boolean).map(normalize).filter(Boolean);
+    const matches = getStandards().filter(s => {
+      const text = normalize([s.code, s.text, ...fields.map(f => s[f])].join(' '));
+      return terms.every(term => text.includes(term));
+    });
+    groups.clear();
+    tree.innerHTML = matches.length ? branch(matches) : '<p class="tree-no-results">일치하는 성취기준이 없어요. 다른 단어나 코드를 입력해 주세요.</p>';
+    tree.querySelectorAll('details').forEach(d => { d.open = terms.length > 0; });
+    tree.scrollTop = 0;
+    document.getElementById('tree-search-reset').hidden = !query.value;
+    searchCount.textContent = terms.length ? `검색 결과 ${matches.length}개 · 그룹 체크는 검색된 기준만 선택해요.` : `전체 ${matches.length}개 · 단어 또는 코드로 찾아보세요.`;
+    sync();
+  }
+  query.addEventListener('input', filterTree);
+  document.getElementById('tree-search-reset').addEventListener('click', () => { query.value = ''; filterTree(); query.focus(); });
   function branch(items, depth = 0) {
     if (depth === fields.length) return items.map(s => `<label class="tree-leaf"><input type="checkbox" data-code="${escape(s.code)}"><span><b>${escape(s.code)}</b><span>${escape(s.text)}</span></span></label>`).join('');
     const buckets = new Map();
@@ -31,7 +49,7 @@ export function mountStandardsBrowser({ getStandards, getBasket, addToBasket }) 
       el.checked = count === codes.length;
       el.indeterminate = count > 0 && count < codes.length;
     });
-    document.getElementById('tree-count').textContent = `${selected.size}개 선택`;
+    document.getElementById('tree-count').textContent = `${selected.size}개 선택${query.value.trim() ? ' (다른 검색에서 선택한 항목 포함)' : ''}`;
     for (const id of ['tree-add', 'tree-copy']) document.getElementById(id).disabled = !selected.size;
   }
   trigger.addEventListener('click', () => {
@@ -40,10 +58,9 @@ export function mountStandardsBrowser({ getStandards, getBasket, addToBasket }) 
     status.textContent = '';
     document.getElementById('tree-fallback').hidden = true;
     if (!standards.length) { status.textContent = '성취기준을 불러오는 중이에요. 잠시 후 다시 열어 주세요.'; return; }
-    if (!built) { tree.innerHTML = branch(standards); built = true; }
     selected.clear();
     getBasket().forEach(s => selected.add(s.code));
-    sync();
+    query.value = ''; filterTree();
   });
   document.getElementById('tree-close').addEventListener('click', () => dialog.close());
   tree.addEventListener('change', e => {

@@ -448,6 +448,7 @@ html, body { height: auto; min-height: 100%; }
 <dialog id="standards-dialog" aria-labelledby="tree-title" aria-describedby="tree-description">
   <div class="tree-shell">
     <header class="tree-header"><div><h2 id="tree-title">전체 성취기준</h2><p id="tree-description">학교급 → 교과 → 학년군 → 영역 · 688개<br>항목을 펼쳐 살펴보고, 체크해서 한 번에 담으세요.</p></div><button class="tree-close" id="tree-close" type="button" aria-label="전체 성취기준 닫기">✕</button></header>
+    <div class="tree-search-wrap"><label for="tree-search">전체 성취기준 검색</label><div class="tree-search-field"><input id="tree-search" type="text" placeholder="단어 또는 코드 입력 · 예: 화폐, 9진로04-03" autocomplete="off" aria-describedby="tree-search-count"><button id="tree-search-reset" type="button" aria-label="모달 검색어 지우기" hidden>✕</button></div><p id="tree-search-count" role="status"></p></div>
     <div class="tree-toolbar"><button id="tree-expand" type="button">모두 펼치기</button><button id="tree-collapse" type="button">모두 접기</button><button id="tree-clear" type="button">선택 해제</button></div>
     <div class="standards-tree" id="standards-tree" aria-label="학교급별 성취기준"></div>
     <footer class="tree-footer"><strong id="tree-count" aria-live="polite">0개 선택</strong><div class="tree-actions"><button id="tree-add" class="btn ghost" type="button" disabled>선택 담기</button><button id="tree-copy" class="btn" type="button" disabled>선택 담고 복사</button></div><p id="tree-status" role="status"></p><textarea id="tree-fallback" readonly hidden aria-label="선택한 성취기준 복사 내용"></textarea></footer>
